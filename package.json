@@ -1,0 +1,25 @@
+{
+  "name": "astro-toolbox",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "lint": "npm run lint:prettier && npm run lint:eslint",
+    "lint:prettier": "prettier --write \"src/**/*.{css,astro}\"",
+    "lint:eslint": "eslint \"src/**/*.{css,js}\""
+  },
+  "devDependencies": {
+    "eslint": "^8.18.0",
+    "netlify-plugin-cypress": "^2.2.1",
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro": "^0.13.0",
+    "typescript": "^5.4.4"
+  },
+  "dependencies": {
+    "astro": "^4.5.18",
+    "cypress": "^13.7.2"
+  }
+}
