@@ -1,68 +1,157 @@
 ---
-
+// FeedbackForm component with Netlify form integration
 ---
 
-<p>
-  Here's an example of a Netlify Form! When you fill this out, the submissions
-  can be found in the Netlify Admin site.
-</p>
-<div class="feedback-form">
-  <form
-    data-netlify="true"
-    netlify-honeypot
-    name="feedback"
-    method="POST"
-    action="/success"
-  >
-    <p class="hidden">
-      <label>
-        Don’t fill this out if you’re human: <input name="bot-field" />
-      </label>
-    </p>
-    <input type="hidden" name="form-name" value="feedback" />
-    <label for="name">Name</label>
-    <input id="name" type="text" name="name" />
-    <label for="email">Email</label>
-    <input id="email" type="email" name="email" required />
-    <label for="feedback">What is your feedback?</label>
-    <textarea id="feedback" wrap="soft" name="feedback" required></textarea>
-    <button type="submit">Submit</button>
-  </form>
+<div class="bg-gray-900 py-16 sm:py-24">
+  <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div
+      class="relative isolate overflow-hidden bg-gray-800 px-6 py-24 after:pointer-events-none after:absolute after:inset-0 after:inset-ring after:inset-ring-white/15 sm:rounded-3xl sm:px-24 after:sm:rounded-3xl xl:py-32"
+    >
+      <h2
+        class="mx-auto max-w-3xl text-center text-4xl font-semibold tracking-tight text-white sm:text-5xl"
+      >
+        Interested in sharing?
+      </h2>
+      <p class="mx-auto mt-6 max-w-lg text-center text-lg text-gray-300">
+        Let us know what you'd like to share: a presentationon a topic, a demo
+        of a project, or a group discussion on a topic.
+      </p>
+              <form
+          id="feedback-form"
+          class="mx-auto mt-10 max-w-md space-y-4"
+          data-netlify="true"
+          netlify-honeypot
+          name="feedback"
+        >
+        <input type="hidden" name="form-name" value="feedback" />
+        <p class="hidden">
+          <label>
+            Don't fill this out if you're human: <input name="bot-field" />
+          </label>
+        </p>
+
+        <div>
+          <label for="name" class="sr-only">Name</label>
+          <input
+            id="name"
+            type="text"
+            name="name"
+            placeholder="Your name"
+            class="w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/20 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+          />
+        </div>
+
+        <div>
+          <label for="email" class="sr-only">Email address</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            required
+            placeholder="Enter your email"
+            autocomplete="email"
+            class="w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/20 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+          />
+        </div>
+
+        <div>
+          <label for="feedback" class="sr-only">What is your feedback?</label>
+          <textarea
+            id="feedback"
+            name="feedback"
+            required
+            placeholder="What is your feedback?"
+            rows="3"
+            class="w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/20 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 resize-none"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        >
+          Submit Feedback
+                  </button>
+        </form>
+
+        <!-- Success message -->
+        <div id="success-message" class="hidden mx-auto mt-6 max-w-md text-center">
+          <div class="rounded-md bg-green-50 p-4">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <p class="text-sm font-medium text-green-800">Thank you! Your submission has been received.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <svg
+        viewBox="0 0 1024 1024"
+        aria-hidden="true"
+        class="absolute top-1/2 left-1/2 -z-10 size-256 -translate-x-1/2"
+      >
+        <circle
+          r="512"
+          cx="512"
+          cy="512"
+          fill="url(#759c1415-0410-454c-8f7c-9a820de03641)"
+          fill-opacity="0.4"></circle>
+        <defs>
+          <radialGradient
+            id="759c1415-0410-454c-8f7c-9a820de03641"
+            r="1"
+            cx="0"
+            cy="0"
+            gradientUnits="userSpaceOnUse"
+            gradientTransform="translate(512 512) rotate(90) scale(512)"
+          >
+            <stop stop-color="#a6cb0b"></stop>
+            <stop offset="1" stop-color="#daeb64" stop-opacity="0"></stop>
+          </radialGradient>
+        </defs>
+      </svg>
+    </div>
+  </div>
 </div>
 
-<style>
-  .feedback-form {
-    margin: 40px 40px;
-    min-width: 250px;
-    width: 45%;
-  }
-  label {
-    font-size: 16px;
-  }
-  input,
-  textarea,
-  button {
-    border-radius: 5px;
-    border: 1px solid #cbd5e1;
-    font-size: inherit;
-    margin: 15px 0;
-    padding: 12px 20px;
-    width: 100%;
-  }
-  button {
-    background-color: #2bdcd2;
-    border: 1px solid #2bdcd2;
-    color: #1e293b;
-    font-size: 16px;
-    width: 50%;
-  }
-  .hidden {
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-  }
-</style>
+<script>
+  // Handle form submission without page navigation
+  document.getElementById('feedback-form')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const originalText = submitButton.textContent;
+    
+    // Show loading state
+    submitButton.disabled = true;
+    submitButton.textContent = 'Submitting...';
+    
+    // Submit to Netlify using their form handling
+    fetch('/', {
+      method: 'POST',
+      body: formData
+    })
+    .then(() => {
+      // Show success message
+      form.style.display = 'none';
+      document.getElementById('success-message')?.classList.remove('hidden');
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // Reset button and show error
+      submitButton.textContent = 'Error - Try Again';
+      submitButton.disabled = false;
+      setTimeout(() => {
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+      }, 3000);
+    });
+  });
+</script>

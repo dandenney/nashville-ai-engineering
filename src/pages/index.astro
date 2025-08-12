@@ -5,66 +5,95 @@ import FeedbackForm from '../components/FeedbackForm.astro';
 
 <Layout title="Astro Toolbox">
   <main>
-    <div class="header">
-      <div class="logo">
-        <img
-          src="https://user-images.githubusercontent.com/43764894/223557634-f62606c5-bdf9-476c-9264-0d3728189962.png"
-          alt="Netlify and Astro.js logos"
-        />
+    <div class="relative isolate overflow-hidden bg-gray-900">
+      <svg
+        aria-hidden="true"
+        class="absolute inset-0 -z-10 size-full mask-[radial-gradient(100%_100%_at_top_right,white,transparent)] stroke-white/10"
+      >
+        <defs>
+          <pattern
+            id="983e3e4c-de6d-4c3f-8d64-b9761d1534cc"
+            width="200"
+            height="200"
+            x="50%"
+            y="-1"
+            patternUnits="userSpaceOnUse"
+          >
+            <path d="M.5 200V.5H200" fill="none"></path>
+          </pattern>
+        </defs>
+        <svg x="50%" y="-1" class="overflow-visible fill-gray-800/20">
+          <path
+            d="M-200 0h201v201h-201Z M600 0h201v201h-201Z M-400 600h201v201h-201Z M200 800h201v201h-201Z"
+            stroke-width="0"></path>
+        </svg>
+        <rect
+          width="100%"
+          height="100%"
+          fill="url(#983e3e4c-de6d-4c3f-8d64-b9761d1534cc)"
+          stroke-width="0"></rect>
+      </svg>
+      <div
+        aria-hidden="true"
+        class="absolute top-10 left-[calc(50%-4rem)] -z-10 transform-gpu blur-3xl sm:left-[calc(50%-18rem)] lg:top-[calc(50%-30rem)] lg:left-48 xl:left-[calc(50%-24rem)]"
+      >
+        <div
+          style="clip-path: polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)"
+          class="aspect-1108/632 w-277 bg-linear-to-r from-[#a6cb0b] to-[#daeb64] opacity-20"
+        >
+        </div>
+      </div>
+      <div
+        class="mx-auto max-w-7xl px-6 pt-10 pb-24 sm:pb-32 lg:flex lg:px-8 lg:py-20"
+      >
+        <div class="mx-auto max-w-2xl shrink-0 lg:mx-0 lg:pt-8">
+          <img
+            src="nashville-ai-engineering.svg"
+            alt="Nashville AI Engineering"
+            class="w-3xs"
+          />
+
+          <h1
+            class="mt-10 text-5xl font-semibold tracking-tight text-pretty text-white sm:text-7xl"
+          >
+            Meetups focused on building with AI
+          </h1>
+          <p
+            class="mt-8 text-lg font-medium text-pretty text-gray-400 sm:text-xl/8"
+          >
+            Whether you're wiring up workflows, shipping side projects, or just
+            curious what this stuff can actually do, you're welcome here.
+          </p>
+          <div class="mt-10 flex items-center gap-x-6">
+            <a
+              href="#"
+              class="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+              >Get started</a
+            >
+            <a href="#" class="text-sm/6 font-semibold text-white"
+              >Learn more <span aria-hidden="true">→</span></a
+            >
+          </div>
+        </div>
+        <div
+          class="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:mt-0 lg:mr-0 lg:ml-10 lg:max-w-none lg:flex-none xl:ml-32"
+        >
+          <div class="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
+            <div
+              class="-m-2 rounded-xl bg-white/2.5 p-2 ring-1 ring-white/10 ring-inset lg:-m-4 lg:rounded-2xl lg:p-4"
+            >
+              <img
+                width="2432"
+                height="1442"
+                src="https://tailwindcss.com/plus-assets/img/component-images/dark-project-app-screenshot.png"
+                alt="App screenshot"
+                class="w-304 rounded-md bg-white/5 shadow-2xl ring-1 ring-white/10"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="intro">
-      <p>
-        Hi 👋! This template gives you an
-        <a href="https://astro.build/">Astro</a> app with the scaffolding for
-        <a href="https://ntl.fyi/3upc4Qo">Netlify Functions</a>, <a
-          href="https://ntl.fyi/3bICRk6">Forms</a
-        >, and
-        <a href="https://ntl.fyi/3PcY8RH">Redirects</a>. Our aim was to give you
-        the code you would need to hit the ground running with a few fun
-        features.
-      </p>
-
-      <p>
-        You can find the code for this project on GitHub at
-        <a href="https://github.com/netlify-templates/astro-toolbox"
-          >https://github.com/netlify-templates/astro-toolbox</a
-        >! Happy coding!
-      </p>
-    </div>
     <FeedbackForm />
-    <a class="jokes-link" href="/api/joke">
-      <h3>Click here for function-loaded jokes!</h3>
-    </a>
   </main>
 </Layout>
-
-<style>
-  .logo img {
-    padding: 30px 0;
-    width: 100%;
-  }
-
-  main {
-    padding: 2rem 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 0 auto;
-    max-width: 60ch;
-    align-items: center;
-  }
-
-  footer {
-    width: 100%;
-    height: 100px;
-    border-top: 1px solid #eaeaea;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  footer img {
-    width: 20px;
-  }
-</style>
