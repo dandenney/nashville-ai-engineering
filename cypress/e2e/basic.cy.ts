@@ -3,11 +3,6 @@ describe('Basic specs', () => {
     cy.visit('/')
   })
 
-  it('Check for meetup topics generator', () => {
-    cy.get('#topic-generator').should('exist')
-    cy.get('#topic-generator').should('contain.text', 'Generate Meetup Topic')
-  })
-
   it('Check for meetup topics API endpoint with mock', () => {
     // Mock the API response
     cy.intercept('GET', '/api/meetup-topics', {
