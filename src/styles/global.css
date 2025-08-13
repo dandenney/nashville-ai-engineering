@@ -1,1 +1,47 @@
 @import "tailwindcss";
+
+/* Button styles that match the Button component */
+.btn {
+  @apply inline-flex items-center justify-center rounded-md font-semibold shadow-[inset_0_1px_0_0_rgba(255,255,255,0.3),inset_0_-1px_0_0_rgba(0,0,0,0.1),0_2px_4px_rgba(0,0,0,0.1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500;
+}
+
+.btn-primary {
+  @apply bg-gradient-to-br from-lime-200 to-lime-500 text-gray-900;
+  transition: all 0.2s ease !important;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1) !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn-secondary {
+  @apply bg-lime-500 text-gray-900;
+  transition: all 0.2s ease !important;
+}
+
+.btn-secondary:hover {
+  filter: brightness(1.1) !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn-sm {
+  @apply px-3 py-2 text-sm;
+}
+
+.btn-md {
+  @apply px-4 py-3 text-base;
+}
+
+.btn-lg {
+  @apply px-6 py-4 text-lg;
+}
+
+/* Form input styles */
+.form-input {
+  @apply w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/20 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-lime-500;
+}
+
+.form-textarea {
+  @apply w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/20 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-lime-500 resize-none;
+}
