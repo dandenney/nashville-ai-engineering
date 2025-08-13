@@ -9,7 +9,10 @@
     "preview": "astro preview",
     "lint": "npm run lint:prettier && npm run lint:eslint",
     "lint:prettier": "prettier --write \"src/**/*.{css,astro}\"",
-    "lint:eslint": "eslint \"src/**/*.{css,js}\""
+    "lint:eslint": "eslint \"src/**/*.{css,js}\"",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "test": "cypress run"
   },
   "devDependencies": {
     "eslint": "^8.18.0",
