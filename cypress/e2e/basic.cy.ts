@@ -3,7 +3,15 @@ describe('Basic specs', () => {
     cy.visit('/')
   })
 
-  it('Check for jokes link', () => {
-    cy.get('.jokes-link').should('have.attr', 'href').and('include', 'api/joke')
+  it('Check for meetup topics generator', () => {
+    cy.get('#topic-generator').should('exist')
+    cy.get('#topic-generator').should('contain.text', 'Generate Meetup Topic')
+  })
+
+  it('Check for meetup topics API endpoint', () => {
+    cy.intercept('GET', '/api/meetup-topics').as('getTopics')
+    cy.get('#topic-generator').click()
+    cy.wait('@getTopics')
+    cy.get('#topic-display').should('be.visible')
   })
 })
