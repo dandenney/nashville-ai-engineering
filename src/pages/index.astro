@@ -189,9 +189,9 @@ import HeroContent from '../components/HeroContent.astro';
             button.textContent = originalText;
             button.disabled = false;
           }, 2000);
-          return;
         }
         
+        // Always reset button state (both success and error cases)
         button.textContent = originalText;
         button.disabled = false;
       });
