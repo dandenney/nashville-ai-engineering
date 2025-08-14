@@ -92,7 +92,13 @@ import HeroContent from '../components/HeroContent.astro';
     </div>
 
     <script>
-      document.getElementById('topic-generator')?.addEventListener('click', async function(e) {
+      const topicGenerator = document.getElementById('topic-generator');
+      if (!topicGenerator) {
+        console.error('Topic generator button not found');
+        return;
+      }
+      
+      topicGenerator.addEventListener('click', async function(e) {
         const button = e.target as HTMLButtonElement;
         const originalText = button.textContent;
         button.disabled = true;
@@ -132,16 +138,25 @@ import HeroContent from '../components/HeroContent.astro';
           console.log('Selected topic:', topic);
           
           // Display the topic
-          document.getElementById('topic-type')!.textContent = topic.type;
-          document.getElementById('topic-difficulty')!.textContent = topic.difficulty;
-          document.getElementById('topic-title')!.textContent = topic.title;
-          document.getElementById('topic-description')!.textContent = topic.description;
+          const topicType = document.getElementById('topic-type');
+          const topicDifficulty = document.getElementById('topic-difficulty');
+          const topicTitle = document.getElementById('topic-title');
+          const topicDescription = document.getElementById('topic-description');
+          
+          if (topicType && topicDifficulty && topicTitle && topicDescription) {
+            topicType.textContent = topic.type;
+            topicDifficulty.textContent = topic.difficulty;
+            topicTitle.textContent = topic.title;
+            topicDescription.textContent = topic.description;
+          }
           
           // Show the display
-          document.getElementById('topic-display')!.classList.remove('hidden');
-          
-          // Scroll to the topic
-          document.getElementById('topic-display')!.scrollIntoView({ behavior: 'smooth' });
+          const topicDisplay = document.getElementById('topic-display');
+          if (topicDisplay) {
+            topicDisplay.classList.remove('hidden');
+            // Scroll to the topic
+            topicDisplay.scrollIntoView({ behavior: 'smooth' });
+          }
           
         } catch (error) {
           const isDev = window.location.hostname === 'localhost';
@@ -156,12 +171,17 @@ import HeroContent from '../components/HeroContent.astro';
           
           // Show user-friendly error message
           const errorDisplay = document.getElementById('topic-display');
-          if (errorDisplay) {
+          const errorTitle = document.getElementById('topic-title');
+          const errorDescription = document.getElementById('topic-description');
+          const errorType = document.getElementById('topic-type');
+          const errorDifficulty = document.getElementById('topic-difficulty');
+          
+          if (errorDisplay && errorTitle && errorDescription && errorType && errorDifficulty) {
             errorDisplay.classList.remove('hidden');
-            document.getElementById('topic-title')!.textContent = 'Error Loading Topic';
-            document.getElementById('topic-description')!.textContent = 'Please try again or check the console for details.';
-            document.getElementById('topic-type')!.textContent = 'Error';
-            document.getElementById('topic-difficulty')!.textContent = 'Unknown';
+            errorTitle.textContent = 'Error Loading Topic';
+            errorDescription.textContent = 'Please try again or check the console for details.';
+            errorType.textContent = 'Error';
+            errorDifficulty.textContent = 'Unknown';
           }
           
           button.textContent = 'Error - Try Again';
