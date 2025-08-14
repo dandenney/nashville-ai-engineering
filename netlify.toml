@@ -13,11 +13,11 @@
 [[plugins]] 
   package = "netlify-plugin-cypress"
 
-  [plugins.inputs.postBuild]
+  [plugins.inputs]
     enable = true
   
-  [plugins.inputs]
-    enable = false
+  [plugins.inputs.postBuild]
+    enable = true
     
 [[redirects]]
   from = "/api/*" # simplify all calls to serverless functions
