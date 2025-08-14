@@ -20,9 +20,8 @@
 </div>
 
 <script>
-  // Meetup API endpoints - using the correct v3 API
+  // Meetup API endpoints - using GraphQL for consistency
   const GROUP_URLNAME = 'nashville-ai-engineering';
-  const PAST_URL = `https://api.meetup.com/find/upcoming_events?group_urlname=${GROUP_URLNAME}&page=5&status=past`;
 
   // Format date for display
   function formatEventDate(dateString) {
@@ -76,18 +75,75 @@
   // Fetch and display past events
   async function fetchPastEvents() {
     try {
-      // Fetch past events
-      const pastResponse = await fetch(PAST_URL);
+      console.log('Fetching past events via GraphQL...');
+      
+      // Get the container element first
+      const pastContainer = document.getElementById('past-events');
+      
+      // Use GraphQL API directly
+        console.log('Response not ok, trying GraphQL instead...');
+        // Use GraphQL API instead
+        const graphqlResponse = await fetch('https://api.meetup.com/gql', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query: `
+              query {
+                groupByUrlname(urlname: "${GROUP_URLNAME}") {
+                  pastEvents(input: {first: 10}) {
+                    edges {
+                      node {
+                        id
+                        title
+                        dateTime
+                        eventUrl
+                        going
+                        maxTickets
+                      }
+                    }
+                  }
+                }
+              }
+            `
+          })
+        });
+        
+        if (graphqlResponse.ok) {
+          const graphqlData = await graphqlResponse.json();
+          console.log('GraphQL past events data:', graphqlData);
+          
+          const events = graphqlData?.data?.groupByUrlname?.pastEvents?.edges || [];
+          if (events.length > 0) {
+            console.log('Found', events.length, 'past events via GraphQL');
+            const transformedEvents = events.map(edge => ({
+              name: edge.node.title,
+              time: edge.node.dateTime,
+              link: edge.node.eventUrl,
+              yes_rsvp_count: edge.node.going,
+              rsvp_limit: edge.node.maxTickets
+            }));
+            
+            pastContainer.innerHTML = transformedEvents
+              .slice(0, 6)
+              .map(event => createPastEventCard(event))
+              .join('');
+            return;
+          }
+        }
+      }
+      
       const pastEvents = await pastResponse.json();
+      console.log('Past events data:', pastEvents);
       
       // Display past events
-      const pastContainer = document.getElementById('past-events');
-      if (pastEvents.length > 0) {
+      if (pastEvents && pastEvents.length > 0) {
+        console.log('Found', pastEvents.length, 'past events');
         pastContainer.innerHTML = pastEvents
           .slice(0, 6)
           .map(event => createPastEventCard(event))
           .join('');
       } else {
+        console.log('No past events found');
         pastContainer.innerHTML = `
           <div class="col-span-3 text-center py-12">
             <p class="text-gray-400">No past events yet. Check back soon!</p>
