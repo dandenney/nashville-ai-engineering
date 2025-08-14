@@ -72,81 +72,72 @@
     `;
   }
 
-  // Fetch and display past events
+  // Fetch and display past events using GraphQL
   async function fetchPastEvents() {
     try {
       console.log('Fetching past events via GraphQL...');
       
-      // Get the container element first
+      // Get the container element
       const pastContainer = document.getElementById('past-events');
       
-      // Use GraphQL API directly
-        console.log('Response not ok, trying GraphQL instead...');
-        // Use GraphQL API instead
-        const graphqlResponse = await fetch('https://api.meetup.com/gql', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            query: `
-              query {
-                groupByUrlname(urlname: "${GROUP_URLNAME}") {
-                  pastEvents(input: {first: 10}) {
-                    edges {
-                      node {
-                        id
-                        title
-                        dateTime
-                        eventUrl
-                        going
-                        maxTickets
-                      }
+      // Use GraphQL API for past events
+      const graphqlResponse = await fetch('https://api.meetup.com/gql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: `
+            query {
+              groupByUrlname(urlname: "${GROUP_URLNAME}") {
+                pastEvents(input: {first: 10}) {
+                  edges {
+                    node {
+                      id
+                      title
+                      dateTime
+                      eventUrl
+                      going
+                      maxTickets
                     }
                   }
                 }
               }
-            `
-          })
-        });
+            }
+          `
+        })
+      });
+      
+      if (graphqlResponse.ok) {
+        const graphqlData = await graphqlResponse.json();
+        console.log('GraphQL past events data:', graphqlData);
         
-        if (graphqlResponse.ok) {
-          const graphqlData = await graphqlResponse.json();
-          console.log('GraphQL past events data:', graphqlData);
+        const events = graphqlData?.data?.groupByUrlname?.pastEvents?.edges || [];
+        if (events.length > 0) {
+          console.log('Found', events.length, 'past events via GraphQL');
+          const transformedEvents = events.map(edge => ({
+            name: edge.node.title,
+            time: edge.node.dateTime,
+            link: edge.node.eventUrl,
+            yes_rsvp_count: edge.node.going,
+            rsvp_limit: edge.node.maxTickets
+          }));
           
-          const events = graphqlData?.data?.groupByUrlname?.pastEvents?.edges || [];
-          if (events.length > 0) {
-            console.log('Found', events.length, 'past events via GraphQL');
-            const transformedEvents = events.map(edge => ({
-              name: edge.node.title,
-              time: edge.node.dateTime,
-              link: edge.node.eventUrl,
-              yes_rsvp_count: edge.node.going,
-              rsvp_limit: edge.node.maxTickets
-            }));
-            
-            pastContainer.innerHTML = transformedEvents
-              .slice(0, 6)
-              .map(event => createPastEventCard(event))
-              .join('');
-            return;
-          }
+          pastContainer.innerHTML = transformedEvents
+            .slice(0, 6)
+            .map(event => createPastEventCard(event))
+            .join('');
+        } else {
+          console.log('No past events found');
+          pastContainer.innerHTML = `
+            <div class="col-span-3 text-center py-12">
+              <p class="text-gray-400">No past events yet. Check back soon!</p>
+            </div>
+          `;
         }
-      }
-      
-      const pastEvents = await pastResponse.json();
-      console.log('Past events data:', pastEvents);
-      
-      // Display past events
-      if (pastEvents && pastEvents.length > 0) {
-        console.log('Found', pastEvents.length, 'past events');
-        pastContainer.innerHTML = pastEvents
-          .slice(0, 6)
-          .map(event => createPastEventCard(event))
-          .join('');
       } else {
-        console.log('No past events found');
+        console.error('GraphQL request failed:', graphqlResponse.status);
         pastContainer.innerHTML = `
           <div class="col-span-3 text-center py-12">
-            <p class="text-gray-400">No past events yet. Check back soon!</p>
+            <p class="text-gray-400">Unable to load events. Please try again later.</p>
           </div>
         `;
       }
