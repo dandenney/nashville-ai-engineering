@@ -92,108 +92,104 @@ import HeroContent from '../components/HeroContent.astro';
     </div>
 
     <script>
-      const topicGenerator = document.getElementById('topic-generator');
-      if (!topicGenerator) {
-        console.error('Topic generator button not found');
-        return;
-      }
-      
-      topicGenerator.addEventListener('click', async function(e) {
-        const button = e.target as HTMLButtonElement;
-        const originalText = button.textContent;
-        button.disabled = true;
-        button.textContent = 'Generating...';
-
-        try {
-          // Handle both development and production environments
-          const isDev = window.location.hostname === 'localhost';
-          const apiUrl = isDev 
-            ? '/.netlify/functions/meetup-topics' 
-            : '/api/meetup-topics';
-            
-          console.log('Attempting to fetch from:', apiUrl);
-          console.log('Environment:', isDev ? 'Development' : 'Production');
-          
-          const response = await fetch(apiUrl);
-          
-          console.log('Response received:', {
-            status: response.status,
-            statusText: response.statusText,
-            headers: Object.fromEntries(response.headers.entries())
-          });
-          
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`);
-          }
-          
-          const data = await response.json();
-          console.log('Response data:', data);
-          
-          // Handle the new response format with error checking
-          if (data.error) {
-            throw new Error(data.error);
-          }
-          
-          const topic = data.topic || data; // Handle both old and new formats
-          console.log('Selected topic:', topic);
-          
-          // Display the topic
-          const topicType = document.getElementById('topic-type');
-          const topicDifficulty = document.getElementById('topic-difficulty');
-          const topicTitle = document.getElementById('topic-title');
-          const topicDescription = document.getElementById('topic-description');
-          
-          if (topicType && topicDifficulty && topicTitle && topicDescription) {
-            topicType.textContent = topic.type;
-            topicDifficulty.textContent = topic.difficulty;
-            topicTitle.textContent = topic.title;
-            topicDescription.textContent = topic.description;
-          }
-          
-          // Show the display
-          const topicDisplay = document.getElementById('topic-display');
-          if (topicDisplay) {
-            topicDisplay.classList.remove('hidden');
-            // Scroll to the topic
-            topicDisplay.scrollIntoView({ behavior: 'smooth' });
-          }
-          
-        } catch (error) {
-          const isDev = window.location.hostname === 'localhost';
-          console.error('=== TOPIC FETCH ERROR ===');
-          console.error('Error type:', error.constructor.name);
-          console.error('Error message:', error.message);
-          console.error('Error stack:', error.stack);
-          console.error('API URL attempted:', isDev ? '/.netlify/functions/meetup-topics' : '/api/meetup-topics');
-          console.error('Environment:', isDev ? 'Development' : 'Production');
-          console.error('Full error object:', error);
-          console.error('========================');
-          
-          // Show user-friendly error message
-          const errorDisplay = document.getElementById('topic-display');
-          const errorTitle = document.getElementById('topic-title');
-          const errorDescription = document.getElementById('topic-description');
-          const errorType = document.getElementById('topic-type');
-          const errorDifficulty = document.getElementById('topic-difficulty');
-          
-          if (errorDisplay && errorTitle && errorDescription && errorType && errorDifficulty) {
-            errorDisplay.classList.remove('hidden');
-            errorTitle.textContent = 'Error Loading Topic';
-            errorDescription.textContent = 'Please try again or check the console for details.';
-            errorType.textContent = 'Error';
-            errorDifficulty.textContent = 'Unknown';
-          }
-          
-          button.textContent = 'Error - Try Again';
-          setTimeout(() => {
-            button.textContent = originalText;
-            button.disabled = false;
-          }, 2000);
+      document.addEventListener('DOMContentLoaded', function() {
+        const topicGenerator = document.getElementById('topic-generator');
+        if (!topicGenerator) {
+          console.error('Topic generator button not found');
+          return;
         }
         
-        // Always reset button state (both success and error cases)
-        button.textContent = originalText;
-        button.disabled = false;
+        topicGenerator.addEventListener('click', async function(e) {
+          const button = e.target as HTMLButtonElement;
+          const originalText = button.textContent;
+          button.disabled = true;
+          button.textContent = 'Generating...';
+
+          try {
+            const isDev = window.location.hostname === 'localhost';
+            const apiUrl = isDev 
+              ? '/.netlify/functions/meetup-topics' 
+              : '/api/meetup-topics';
+              
+            console.log('Attempting to fetch from:', apiUrl);
+            console.log('Environment:', isDev ? 'Development' : 'Production');
+            
+            const response = await fetch(apiUrl);
+            
+            console.log('Response received:', {
+              status: response.status,
+              statusText: response.statusText,
+              headers: Object.fromEntries(response.headers.entries())
+            });
+            
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`);
+            }
+            
+            const data = await response.json();
+            console.log('Response data:', data);
+            
+            if (data.error) {
+              throw new Error(data.error);
+            }
+            
+            const topic = data.topic || data;
+            console.log('Selected topic:', topic);
+            
+            const topicType = document.getElementById('topic-type');
+            const topicDifficulty = document.getElementById('topic-difficulty');
+            const topicTitle = document.getElementById('topic-title');
+            const topicDescription = document.getElementById('topic-description');
+            
+            if (topicType && topicDifficulty && topicTitle && topicDescription) {
+              topicType.textContent = topic.type;
+              topicDifficulty.textContent = topic.difficulty;
+              topicTitle.textContent = topic.title;
+              topicDescription.textContent = topic.description;
+            }
+            
+            const topicDisplay = document.getElementById('topic-display');
+            if (topicDisplay) {
+              topicDisplay.classList.remove('hidden');
+              topicDisplay.scrollIntoView({ behavior: 'smooth' });
+            }
+            
+          } catch (error) {
+            const isDev = window.location.hostname === 'localhost';
+            console.error('=== TOPIC FETCH ERROR ===');
+            console.error('Error type:', error.constructor.name);
+            console.error('Error message:', error.message);
+            console.error('Error stack:', error.stack);
+            console.error('API URL attempted:', isDev ? '/.netlify/functions/meetup-topics' : '/api/meetup-topics');
+            console.error('Environment:', isDev ? 'Development' : 'Production');
+            console.error('Full error object:', error);
+            console.error('========================');
+            
+            const errorDisplay = document.getElementById('topic-display');
+            const errorTitle = document.getElementById('topic-title');
+            const errorDescription = document.getElementById('topic-description');
+            const errorType = document.getElementById('topic-type');
+            const errorDifficulty = document.getElementById('topic-difficulty');
+            
+            if (errorDisplay && errorTitle && errorDescription && errorType && errorDifficulty) {
+              errorDisplay.classList.remove('hidden');
+              errorTitle.textContent = 'Error Loading Topic';
+              errorDescription.textContent = 'Please try again or check the console for details.';
+              errorType.textContent = 'Error';
+              errorDifficulty.textContent = 'Unknown';
+            }
+            
+            button.textContent = 'Error - Try Again';
+            setTimeout(() => {
+              button.textContent = originalText;
+              button.disabled = false;
+            }, 2000);
+            return;
+          }
+          
+          button.textContent = originalText;
+          button.disabled = false;
+        });
       });
     </script>
   </main>
