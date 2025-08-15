@@ -19,11 +19,11 @@ export const events: Event[] = [
   {
     id: 'event-1',
     title: 'Meet and Greet!',
-    description: "This is the initial meeting! Come with a tool or workflow that you're using to share.\n\nAlso, please share your opinion on the format for future events.My initial thinking is that each event should be a combination of a longer talk(20- 30 mins) and 1 or 2 shorter demos / discussions(10 - 20) minutes.That said, I want to match what people are interested in!",
+    description: 'This is the initial meeting! Come with a tool or workflow that you\'re using to share.\n\nAlso, please share your opinion on the format for future events.My initial thinking is that each event should be a combination of a longer talk(20- 30 mins) and 1 or 2 shorter demos / discussions(10 - 20) minutes.That said, I want to match what people are interested in!',
     date: '2025-08-13T18:00:00-06:00',
     location: 'Monday Night Brewing',
     currentRSVPs: 18,
-    registrationUrl: 'https://www.meetup.com/nashville-ai-engineering/events/example',
+    registrationUrl: 'https://www.meetup.com/nashville-ai-engineering/events/',
     bgPath: 'bg-vicuna-13b.webp'
   }
 ];
