@@ -14,7 +14,7 @@
     "type-check": "tsc --noEmit",
     "lint": "npm run lint:prettier && npm run lint:eslint",
     "lint:prettier": "prettier --write \"src/**/*.{css,astro}\"",
-    "lint:eslint": "eslint \"src/**/*.{css,js}\"",
+    "lint:eslint": "eslint \"src/**/*.{js,mjs}\"",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "test": "cypress run"

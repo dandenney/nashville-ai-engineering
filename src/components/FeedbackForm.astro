@@ -13,8 +13,8 @@
         Interested in sharing?
       </h2>
       <p class="mx-auto mt-6 max-w-lg text-center text-lg text-gray-300">
-        Let us know what you'd like to share: a presentation, a demo
-        of a project, or a group discussion on a topic.
+        Let us know what you'd like to share: a presentation, a demo of a
+        project, or a group discussion on a topic.
       </p>
       <form
         id="feedback-form"
@@ -22,7 +22,7 @@
         data-netlify="true"
         netlify-honeypot
         name="feedback"
-        >
+      >
         <input type="hidden" name="form-name" value="feedback" />
         <p class="hidden">
           <label>
@@ -62,35 +62,43 @@
             required
             placeholder="What is your feedback?"
             rows="3"
-            class="form-textarea"
-          ></textarea>
+            class="form-textarea"></textarea>
         </div>
 
-        <button
-          type="submit"
-          class="w-full btn btn-primary btn-md"
-        >
+        <button type="submit" class="w-full btn btn-primary btn-md">
           Send It!
         </button>
-        </form>
+      </form>
 
-        <!-- Success message -->
-        <div id="success-message" class="hidden mx-auto mt-6 max-w-md text-center">
-          <div class="rounded-md bg-lime-50 p-4">
-            <div class="flex">
-              <div class="flex-shrink-0">
-                <svg class="h-5 w-5 text-lime-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                </svg>
-              </div>
-              <div class="ml-3">
-                <p class="text-sm font-medium text-lime-800">Thank you! Your submission has been received.</p>
-              </div>
+      <!-- Success message -->
+      <div
+        id="success-message"
+        class="hidden mx-auto mt-6 max-w-md text-center"
+      >
+        <div class="rounded-md bg-lime-50 p-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <svg
+                class="h-5 w-5 text-lime-400"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-lime-800">
+                Thank you! Your submission has been received.
+              </p>
             </div>
           </div>
         </div>
+      </div>
 
-        <svg
+      <svg
         viewBox="0 0 1024 1024"
         aria-hidden="true"
         class="absolute top-1/2 left-1/2 -z-10 size-256 -translate-x-1/2"
@@ -121,37 +129,43 @@
 
 <script>
   // Handle form submission without page navigation
-  document.getElementById('feedback-form')?.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const form = e.target as HTMLFormElement;
-    const formData = new FormData(form);
-    const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
-    const originalText = submitButton.textContent;
-    
-    // Show loading state
-    submitButton.disabled = true;
-    submitButton.textContent = 'Submitting...';
-    
-    // Submit to Netlify using their form handling
-    fetch('/', {
-      method: 'POST',
-      body: formData
-    })
-    .then(() => {
-      // Show success message
-      form.style.display = 'none';
-      document.getElementById('success-message')?.classList.remove('hidden');
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      // Reset button and show error
-      submitButton.textContent = 'Error - Try Again';
-      submitButton.disabled = false;
-      setTimeout(() => {
-        submitButton.textContent = originalText;
-        submitButton.disabled = false;
-      }, 3000);
+  document
+    .getElementById('feedback-form')
+    ?.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const form = e.target as HTMLFormElement;
+      const formData = new FormData(form);
+      const submitButton = form.querySelector(
+        'button[type="submit"]',
+      ) as HTMLButtonElement;
+      const originalText = submitButton.textContent;
+
+      // Show loading state
+      submitButton.disabled = true;
+      submitButton.textContent = 'Submitting...';
+
+      // Submit to Netlify using their form handling
+      fetch('/', {
+        method: 'POST',
+        body: formData,
+      })
+        .then(() => {
+          // Show success message
+          form.style.display = 'none';
+          document
+            .getElementById('success-message')
+            ?.classList.remove('hidden');
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          // Reset button and show error
+          submitButton.textContent = 'Error - Try Again';
+          submitButton.disabled = false;
+          setTimeout(() => {
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+          }, 3000);
+        });
     });
-  });
 </script>
