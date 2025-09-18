@@ -115,17 +115,7 @@ import HeroContent from '../components/HeroContent.astro';
             const apiUrl = isDev
               ? '/.netlify/functions/meetup-topics'
               : '/api/meetup-topics';
-
-            console.log('Attempting to fetch from:', apiUrl);
-            console.log('Environment:', isDev ? 'Development' : 'Production');
-
             const response = await fetch(apiUrl);
-
-            console.log('Response received:', {
-              status: response.status,
-              statusText: response.statusText,
-              headers: Object.fromEntries(response.headers.entries()),
-            });
 
             if (!response.ok) {
               throw new Error(
@@ -134,14 +124,12 @@ import HeroContent from '../components/HeroContent.astro';
             }
 
             const data = await response.json();
-            console.log('Response data:', data);
 
             if (data.error) {
               throw new Error(data.error);
             }
 
             const topic = data.topic || data;
-            console.log('Selected topic:', topic);
 
             const topicType = document.getElementById('topic-type');
             const topicDifficulty = document.getElementById('topic-difficulty');
@@ -168,19 +156,6 @@ import HeroContent from '../components/HeroContent.astro';
             }
           } catch (error) {
             const isDev = window.location.hostname === 'localhost';
-            console.error('=== TOPIC FETCH ERROR ===');
-            console.error('Error type:', error.constructor.name);
-            console.error('Error message:', error.message);
-            console.error('Error stack:', error.stack);
-            console.error(
-              'API URL attempted:',
-              isDev
-                ? '/.netlify/functions/meetup-topics'
-                : '/api/meetup-topics',
-            );
-            console.error('Environment:', isDev ? 'Development' : 'Production');
-            console.error('Full error object:', error);
-            console.error('========================');
 
             const errorDisplay = document.getElementById('topic-display');
             const errorTitle = document.getElementById('topic-title');
