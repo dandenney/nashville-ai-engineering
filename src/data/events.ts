@@ -48,6 +48,16 @@ export function formatEventDate(dateString: string): string {
   });
 }
 
+export function formatFullDate(dateString: string): string {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
+}
+
 export function formatEventTime(dateString: string): string {
   const date = new Date(dateString);
   return date.toLocaleTimeString('en-US', {
