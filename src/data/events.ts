@@ -17,6 +17,16 @@ export interface Event {
 // Single events list - you can edit this directly
 export const events: Event[] = [
   {
+    id: 'event-3',
+    title: "AI Engineering Discussions: What you're working on or experimenting with",
+    description: "Join us for an informative evening where local professional, amateur, and student community members (including you!) discuss technical deep-dives, and discussions of AI-related projects or research they are working on, tools and techniques they have tried, or research papers/publications/presentations that they find insightful.\n\nWe are not entirely sure that we'll have access to audio/video, so we are planning around not having it. It will be a bonus feature if we do.",
+    date: '2025-10-15T18:00:00-06:00',
+    location: 'Bassline Brewing Co.',
+    currentRSVPs: 15,
+    registrationUrl: 'https://www.meetup.com/nashville-ai-engineering/events/311417282/?eventOrigin=home_next_event_you_are_hosting',
+    bgPath: 'bg-vicuna-13b.webp'
+  },
+  {
     id: 'event-2',
     title: 'AI Engineering Showcase: What Our Peers Are Building & Exploring in Nashville',
     description: 'Join us for an informative evening where local professional, amateur, and student community members (including you!) share “wires-out” demos, technical deep-dives, and discussions of AI-related projects or research they are working on, tools and techniques they have tried, or research papers/publications/presentations that they find insightful. This event is for those just starting to explore the technical aspects of AI, experienced AI professionals, and everyone in between. See you there!\n\nWe\'re are maintaining a list of folks who express an interest in sharing what they are working on. So, please let Dan and Ram know if you\'d like to share something with the community.And, if you know of hosts or sponsors for our community gatherings.',
