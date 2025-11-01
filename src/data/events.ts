@@ -18,8 +18,8 @@ export interface Event {
 export const events: Event[] = [
   {
     id: 'event-3',
-    title: "AI Engineering Discussions: What you're working on or experimenting with",
-    description: "Join us for an informative evening where local professional, amateur, and student community members (including you!) discuss technical deep-dives, and discussions of AI-related projects or research they are working on, tools and techniques they have tried, or research papers/publications/presentations that they find insightful.\n\nWe are not entirely sure that we'll have access to audio/video, so we are planning around not having it. It will be a bonus feature if we do.",
+    title: 'AI Engineering Discussions: What you\'re working on or experimenting with',
+    description: 'Join us for an informative evening where local professional, amateur, and student community members (including you!) discuss technical deep-dives, and discussions of AI-related projects or research they are working on, tools and techniques they have tried, or research papers/publications/presentations that they find insightful.\n\nWe are not entirely sure that we\'ll have access to audio/video, so we are planning around not having it. It will be a bonus feature if we do.',
     date: '2025-10-15T18:00:00-06:00',
     location: 'Bassline Brewing Co.',
     currentRSVPs: 15,
@@ -80,16 +80,28 @@ export function formatEventTime(dateString: string): string {
 export function isEventUpcoming(dateString: string): boolean {
   const eventDate = new Date(dateString);
   const now = new Date();
-  return eventDate > now;
+  
+  // Get the day boundaries (start of day at 00:00:00)
+  const eventDay = new Date(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate());
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const dayAfterEvent = new Date(eventDay);
+  dayAfterEvent.setDate(dayAfterEvent.getDate() + 1);
+  
+  // Event is upcoming if today is before the day after the event
+  return today < dayAfterEvent;
 }
 
 // Get upcoming and past events
 export function getUpcomingEvents(): Event[] {
-  return events.filter(event => isEventUpcoming(event.date));
+  return events
+    .filter(event => isEventUpcoming(event.date))
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 }
 
 export function getPastEvents(): Event[] {
-  return events.filter(event => !isEventUpcoming(event.date));
+  return events
+    .filter(event => !isEventUpcoming(event.date))
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 // Get the next upcoming event (if any)

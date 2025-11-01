@@ -1,9 +1,9 @@
 ---
 // MeetupEvents component to display events from a single data source
-import { events, formatEventDate } from '../data/events';
+import { getPastEvents, formatEventDate } from '../data/events';
 
-// Get all events to fill the grid (both past and upcoming)
-const allEvents = events;
+// Get past events to fill the grid
+const allEvents = getPastEvents();
 ---
 
 <div class="bg-gray-900 py-24 sm:py-32">
@@ -118,24 +118,6 @@ const allEvents = events;
           </article>
         ))
       }
-
-      {/* Simple placeholder cards */}  
-
-      <article
-        class="hidden relative isolate flex flex-col justify-end overflow-hidden rounded-2xl px-8 pt-80 pb-8 sm:pt-48 lg:pt-80 lg:flex border-2 border-dashed border-purple-500/30"
-      >
-        <div
-          class="absolute inset-0 -z-10 bg-gradient-to-br from-indigo-600/10 to-purple-800/10"
-        >
-        </div>
-        <div class="absolute inset-0 -z-10 rounded-2xl"></div>
-
-        <div
-          class="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm/6 text-gray-400"
-        >
-          <time class="mr-8">A future, past event ;)</time>
-        </div>
-      </article>
     </div>
   </div>
 </div>
