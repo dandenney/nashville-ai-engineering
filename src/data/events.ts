@@ -49,59 +49,97 @@ export const events: Event[] = [
 ];
 
 // Helper functions
+// Parse date string to extract date components without timezone conversion
+function parseDateString(dateString: string): { year: number; month: number; day: number; hour: number; minute: number } {
+  // Parse ISO date string like '2025-08-13T18:00:00-06:00'
+  const match = dateString.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/);
+  if (!match) {
+    throw new Error(`Invalid date format: ${dateString}`);
+  }
+  return {
+    year: parseInt(match[1], 10),
+    month: parseInt(match[2], 10),
+    day: parseInt(match[3], 10),
+    hour: parseInt(match[4], 10),
+    minute: parseInt(match[5], 10),
+  };
+}
+
+const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const MONTH_NAMES_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const WEEKDAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+// Get weekday name from date components (using Zeller's congruence)
+function getWeekday(year: number, month: number, day: number): string {
+  const m = month < 3 ? month + 12 : month;
+  const y = month < 3 ? year - 1 : year;
+  const d = day;
+  const w = (d + Math.floor((13 * (m + 1)) / 5) + y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400)) % 7;
+  // Convert from Saturday=0 to Sunday=0
+  const weekdayIndex = (w + 1) % 7;
+  return WEEKDAY_NAMES[weekdayIndex];
+}
+
 export function formatEventDate(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric'
-  });
+  const { year, month, day } = parseDateString(dateString);
+  return `${MONTH_NAMES_SHORT[month - 1]} ${day}, ${year}`;
 }
 
 export function formatFullDate(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  });
+  const { year, month, day } = parseDateString(dateString);
+  const weekday = getWeekday(year, month, day);
+  return `${weekday}, ${MONTH_NAMES[month - 1]} ${day}, ${year}`;
 }
 
 export function formatEventTime(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: '2-digit',
-    timeZoneName: 'short',
-  });
+  const { hour, minute } = parseDateString(dateString);
+  const hour12 = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+  const ampm = hour < 12 ? 'AM' : 'PM';
+  const minuteStr = minute.toString().padStart(2, '0');
+  // Nashville is in Central Time, so we'll display CST/CDT
+  // For simplicity, we'll use CST (but you could make this dynamic)
+  const timezone = 'CST';
+  return `${hour12}:${minuteStr} ${ampm} ${timezone}`;
 }
 
 export function isEventUpcoming(dateString: string): boolean {
-  const eventDate = new Date(dateString);
+  const { year: eventYear, month: eventMonth, day: eventDay } = parseDateString(dateString);
   const now = new Date();
   
-  // Get the day boundaries (start of day at 00:00:00)
-  const eventDay = new Date(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate());
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const dayAfterEvent = new Date(eventDay);
-  dayAfterEvent.setDate(dayAfterEvent.getDate() + 1);
+  // Get today's date in UTC to avoid timezone issues
+  const todayYear = now.getUTCFullYear();
+  const todayMonth = now.getUTCMonth() + 1; // getUTCMonth() returns 0-11
+  const todayDay = now.getUTCDate();
   
-  // Event is upcoming if today is before the day after the event
-  return today < dayAfterEvent;
+  // Compare dates directly without timezone conversion
+  if (eventYear > todayYear) return true;
+  if (eventYear < todayYear) return false;
+  if (eventMonth > todayMonth) return true;
+  if (eventMonth < todayMonth) return false;
+  return eventDay >= todayDay; // Event is upcoming if it's today or in the future
+}
+
+// Helper to compare two date strings for sorting
+function compareDateStrings(a: string, b: string): number {
+  const dateA = parseDateString(a);
+  const dateB = parseDateString(b);
+  
+  if (dateA.year !== dateB.year) return dateA.year - dateB.year;
+  if (dateA.month !== dateB.month) return dateA.month - dateB.month;
+  return dateA.day - dateB.day;
 }
 
 // Get upcoming and past events
 export function getUpcomingEvents(): Event[] {
   return events
     .filter(event => isEventUpcoming(event.date))
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    .sort((a, b) => compareDateStrings(a.date, b.date));
 }
 
 export function getPastEvents(): Event[] {
   return events
     .filter(event => !isEventUpcoming(event.date))
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    .sort((a, b) => compareDateStrings(b.date, a.date)); // Reverse sort for past events
 }
 
 // Get the next upcoming event (if any)
