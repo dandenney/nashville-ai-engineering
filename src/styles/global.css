@@ -6,7 +6,7 @@
 }
 
 .btn-primary {
-  @apply bg-gradient-to-br from-lime-200 to-lime-500 text-gray-900;
+  @apply bg-gradient-to-br from-teal-200 to-teal-400 text-gray-900;
   transition: all 0.2s ease !important;
 }
 
@@ -16,7 +16,7 @@
 }
 
 .btn-secondary {
-  @apply bg-lime-500 text-gray-900;
+  @apply bg-teal-300 text-gray-900;
   transition: all 0.2s ease !important;
 }
 
