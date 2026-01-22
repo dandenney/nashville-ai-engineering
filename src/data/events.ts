@@ -17,6 +17,26 @@ export interface Event {
 // Single events list - you can edit this directly
 export const events: Event[] = [
   {
+    id: 'event-5',
+    title: 'Field Reports: What Fellow Artificial Intelligencers Are Building & Exploring',
+    description: 'Community members share demos and technical presentations on AI projects.\n\nFeatured presenters:\n• River Kanies on CyberMonk (LLM philosophy exploration)\n• Ryan Mitchell on Nihongo Convo (Japanese language learning app)\n• Hunter Phillips on gradio.app deployment',
+    date: '2026-02-18T18:00:00-06:00',
+    location: 'Bitcoin Park Nashville, 1910 21st Ave S, Nashville, TN',
+    currentRSVPs: 8,
+    registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312397786',
+    bgPath: 'bg-vicuna-13b.webp'
+  },
+  {
+    id: 'event-4',
+    title: 'Field Reports: What Fellow Artificial Intelligencers Are Building & Exploring',
+    description: 'Community members share demos and technical presentations on AI projects.\n\nFeatured presenters:\n• Satoshi Mitsumori on construction AI analytics\n• Ben Winter on question-generator architecture\n• Adam on diagnostic tooling',
+    date: '2026-01-22T18:00:00-06:00',
+    location: 'Vaco Nashville, 5501 Virginia Way Suite 120, Brentwood, TN',
+    currentRSVPs: 57,
+    registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312397656',
+    bgPath: 'bg-vicuna-13b.webp'
+  },
+  {
     id: 'event-3',
     title: 'AI Engineering Discussions: What you\'re working on or experimenting with',
     description: 'Join us for an informative evening where local professional, amateur, and student community members (including you!) discuss technical deep-dives, and discussions of AI-related projects or research they are working on, tools and techniques they have tried, or research papers/publications/presentations that they find insightful.\n\nWe are not entirely sure that we\'ll have access to audio/video, so we are planning around not having it. It will be a bonus feature if we do.',
@@ -75,8 +95,8 @@ function getWeekday(year: number, month: number, day: number): string {
   const y = month < 3 ? year - 1 : year;
   const d = day;
   const w = (d + Math.floor((13 * (m + 1)) / 5) + y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400)) % 7;
-  // Convert from Saturday=0 to Sunday=0
-  const weekdayIndex = (w + 1) % 7;
+  // Zeller's result: 0=Sat, 1=Sun, 2=Mon, etc. Convert to WEEKDAY_NAMES index where 0=Sun
+  const weekdayIndex = (w + 6) % 7;
   return WEEKDAY_NAMES[weekdayIndex];
 }
 
