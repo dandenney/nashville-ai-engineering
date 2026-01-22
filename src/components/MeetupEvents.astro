@@ -22,7 +22,7 @@ const allEvents = getPastEvents();
       {
         allEvents.map((event) => (
           <article
-            class="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-800 px-8 pt-80 pb-8 sm:pt-48 lg:pt-80 bg-cover bg-no-repeat bg-center"
+            class="relative isolate flex flex-col overflow-hidden rounded-2xl bg-gray-800 p-8 bg-cover bg-no-repeat bg-center"
             style={event.bgPath ? `background-image: url(${event.bgPath})` : ''}
           >
             <div class="absolute inset-0 -z-10 bg-gradient-to-br from-slate-500/50 to-slate-800/80" />
@@ -64,7 +64,7 @@ const allEvents = getPastEvents();
             </h3>
 
             {event.description && (
-              <p class="mt-2 text-sm text-white line-clamp-3">
+              <p class="mt-2 text-sm text-white">
                 {event.description}
               </p>
             )}
