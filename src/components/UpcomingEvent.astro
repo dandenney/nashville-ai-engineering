@@ -6,7 +6,7 @@ import { getNextEvent, formatFullDate, formatEventTime } from '../data/events';
 const upcomingEvent = getNextEvent();
 ---
 
-<div class="flex items-stretch">
+<section class="flex items-stretch">
   {
     upcomingEvent ? (
       <div class="w-full max-w-md rounded-xl bg-slate-800 p-2 ring-1 ring-white/10 ring-inset mx-auto lg:mx-0 lg:p-4 flex">
@@ -131,4 +131,4 @@ const upcomingEvent = getNextEvent();
       </div>
     )
   }
-</div>
+</section>

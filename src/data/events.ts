@@ -65,7 +65,7 @@ export const events: Event[] = [
     currentRSVPs: 18,
     registrationUrl: 'https://www.meetup.com/nashville-ai-engineering/events/',
     bgPath: 'bg-vicuna-13b.webp'
-  }
+  },
 ];
 
 // Helper functions
