@@ -17,12 +17,52 @@ export interface Event {
 // Single events list - you can edit this directly
 export const events: Event[] = [
   {
+    id: 'event-9',
+    title: 'Field Reports: What Fellow Artificial Intelligencers Are Building & Exploring',
+    description: 'Community members share demos and technical presentations on AI projects.\n\nFeatured presenters:\n• Ray Arceneaux, MBA, on Family Health Tree, helping families build and control their current and historical health info in one place, born from his personal journey with Type 1 Diabetes\n• Ean Krenzin-Blank on breaking down problems for AI\n• Mike Gallers on a webapp built entirely with Claude\'s assistance to track vehicle and home maintenance\n• Mike Kelso on going from product manager to product creator, using Claude to cross the technology divide',
+    date: '2026-06-17T18:00:00-06:00',
+    location: 'AI Freedom Lab, 1910 21st Ave S, Nashville, TN',
+    currentRSVPs: 35,
+    registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408899',
+    bgPath: 'bg-vicuna-13b.webp'
+  },
+  {
+    id: 'event-8',
+    title: 'Field Reports: What Fellow Artificial Intelligencers Are Building & Exploring',
+    description: 'Community members share demos and technical presentations on AI projects.\n\nFeatured presenters:\n• Satoshi on structuring RAG outputs for decision-making (From Retrieval to Readability)\n• Scott Hawley on hierarchical multi-scale representation learning for music understanding and generation\n• BettyAnn on going from zero to her first AI-developed project\n• Dan on DESIGN.md',
+    date: '2026-05-28T18:00:00-06:00',
+    location: 'Vaco Nashville, 5501 Virginia Way Suite 120, Brentwood, TN',
+    currentRSVPs: 54,
+    registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408865',
+    bgPath: 'bg-vicuna-13b.webp'
+  },
+  {
+    id: 'event-7',
+    title: 'Field Reports: What Fellow Artificial Intelligencers Are Building & Exploring',
+    description: 'Community members share demos and technical presentations on AI projects.\n\nFeatured presenters:\n• Carlton Davis on a Claude skill that builds a spreadsheet to calculate and categorize his business expenses from a Google Calendar export and AMEX statements\n• Rajeev Gupta on slicing JIRA data in ways the platform doesn\'t natively support, with no coding background and no dedicated engineering support\n• Ross Miller on improving the safety of AI responses in highly regulated industries like healthcare, using type-safe error handling, automated enforcement scripts, structured adversarial review, and root cause analyses\n• Matthias Debernardini on an iroh-based peer-to-peer AI gateway and two apps built on it: a calorie/kitchen/peptide tracker and an agent bridge for Hermes',
+    date: '2026-04-15T18:00:00-06:00',
+    location: 'AI Freedom Lab, 1910 21st Ave S, Nashville, TN',
+    currentRSVPs: 63,
+    registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408891',
+    bgPath: 'bg-vicuna-13b.webp'
+  },
+  {
+    id: 'event-6',
+    title: 'Field Reports: What Fellow Artificial Intelligencers Are Building & Exploring',
+    description: 'Community members share demos and technical presentations on AI projects.\n\nFeatured presenters:\n• River Kanies on CyberMonk (LLM philosophy exploration)\n• Ryan Mitchell on Nihongo Convo (Japanese language learning app)\n• Hunter Phillips on gradio.app deployment',
+    date: '2026-03-26T18:00:00-06:00',
+    location: 'Vaco Nashville, 5501 Virginia Way Suite 120, Brentwood, TN',
+    currentRSVPs: 54,
+    registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408860',
+    bgPath: 'bg-vicuna-13b.webp'
+  },
+  {
     id: 'event-5',
     title: 'Field Reports: What Fellow Artificial Intelligencers Are Building & Exploring',
     description: 'Community members share demos and technical presentations on AI projects.\n\nFeatured presenters:\n• River Kanies on CyberMonk (LLM philosophy exploration)\n• Ryan Mitchell on Nihongo Convo (Japanese language learning app)\n• Hunter Phillips on gradio.app deployment',
     date: '2026-02-18T18:00:00-06:00',
     location: 'Bitcoin Park Nashville, 1910 21st Ave S, Nashville, TN',
-    currentRSVPs: 8,
+    currentRSVPs: 36,
     registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312397786',
     bgPath: 'bg-vicuna-13b.webp'
   },
