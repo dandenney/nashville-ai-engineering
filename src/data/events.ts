@@ -17,43 +17,73 @@ export interface Event {
 // Single events list - you can edit this directly
 export const events: Event[] = [
   {
-    id: 'event-9',
+    id: '312408881',
     title: 'Field Reports: What Fellow Artificial Intelligencers Are Building & Exploring',
-    description: 'Community members share demos and technical presentations on AI projects.\n\nFeatured presenters:\n• Ray Arceneaux, MBA, on Family Health Tree, helping families build and control their current and historical health info in one place, born from his personal journey with Type 1 Diabetes\n• Ean Krenzin-Blank on breaking down problems for AI\n• Mike Gallers on a webapp built entirely with Claude\'s assistance to track vehicle and home maintenance\n• Mike Kelso on going from product manager to product creator, using Claude to cross the technology divide',
-    date: '2026-06-17T18:00:00-06:00',
-    location: 'AI Freedom Lab, 1910 21st Ave S, Nashville, TN',
-    currentRSVPs: 35,
-    registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408899',
+    description: 'Thank you, Vaco, for generously hosting our collective on the odd months of the year! Join us for an informative evening where local professional, amateur, and student community members (including you!) share “wires-out” demos, technical deep-dives, and discussions of AI-related projects or research they are working on, tools and techniques they have tried, or research papers/publications/presentations that they find insightful. This event is for those just starting to explore the technical aspects of AI, experienced AI professionals, and everyone in between. See you there!\n\nWe\'re are maintaining a list of folks who express an interest in sharing what they are working on. So, *please* *let Dan and Ram know if you\'d like to share something with the community via a message here on Meetup or in our Discord channel (https://discord.gg/H38zBzzC). And, if you know of hosts or sponsors for our community gatherings.*\n\n**AGENDA**\n0600 pm -- Setup/Meet & Greet "free time"\n0615 pm -- Demos/presentations (15- 20 min each)\n0745 pm -- Wrap-up\n0800 pm -- Vacate Room\n\n**THE PRESENTATIONS**\n\n* TBD -- Let us know what you\'d like to share!',
+    date: '2026-09-24T18:00:00-05:00',
+    location: 'Vaco, 5501 Virginia Way, Suite 120, Brentwood, TN',
+    currentRSVPs: 5,
+    registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408881/',
     bgPath: 'bg-vicuna-13b.webp'
   },
   {
-    id: 'event-8',
+    id: '312408901',
     title: 'Field Reports: What Fellow Artificial Intelligencers Are Building & Exploring',
-    description: 'Community members share demos and technical presentations on AI projects.\n\nFeatured presenters:\n• Satoshi on structuring RAG outputs for decision-making (From Retrieval to Readability)\n• Scott Hawley on hierarchical multi-scale representation learning for music understanding and generation\n• BettyAnn on going from zero to her first AI-developed project\n• Dan on DESIGN.md',
-    date: '2026-05-28T18:00:00-06:00',
-    location: 'Vaco Nashville, 5501 Virginia Way Suite 120, Brentwood, TN',
-    currentRSVPs: 54,
-    registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408865',
+    description: 'Thank you, AI Freedom Lab, for generously hosting our AI collective on the even months of the year! Join us for an insight-packed evening where local professional, amateur, and student community members (including you!) share “wires-out” demos, technical deep-dives, and discussions of AI-related projects or research they are working on, tools and techniques they have tried, or research papers/publications/presentations that they find insightful. This event is for those just starting to explore the technical aspects of AI, experienced AI professionals, and everyone in between. See you here!\n\nWe\'re are maintaining a list of folks who express an interest in sharing what they are working on. So, *please* *let Dan and Ram know if you\'d like to share something with the community via a message here on Meetup or in our Discord channel (https://discord.gg/H38zBzzC). And, if you know of hosts or sponsors for our community gatherings.*\n\n**AGENDA**\n0600 pm -- Setup/Meet & Greet "free time"\n0615 pm -- Demos/presentations (15- 20 min each)\n0745 pm -- Wrap-up\n0800 pm -- Vacate Room\n\n**THE PRESENTATIONS**\n\n* TBD -- Let us know what you\'d like to share!',
+    date: '2026-08-19T18:00:00-05:00',
+    location: 'AI Freedom Lab, 1912 21st Ave S, Nashville, TN',
+    currentRSVPs: 5,
+    registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408901/',
     bgPath: 'bg-vicuna-13b.webp'
   },
   {
-    id: 'event-7',
+    id: '312408875',
     title: 'Field Reports: What Fellow Artificial Intelligencers Are Building & Exploring',
-    description: 'Community members share demos and technical presentations on AI projects.\n\nFeatured presenters:\n• Carlton Davis on a Claude skill that builds a spreadsheet to calculate and categorize his business expenses from a Google Calendar export and AMEX statements\n• Rajeev Gupta on slicing JIRA data in ways the platform doesn\'t natively support, with no coding background and no dedicated engineering support\n• Ross Miller on improving the safety of AI responses in highly regulated industries like healthcare, using type-safe error handling, automated enforcement scripts, structured adversarial review, and root cause analyses\n• Matthias Debernardini on an iroh-based peer-to-peer AI gateway and two apps built on it: a calorie/kitchen/peptide tracker and an agent bridge for Hermes',
-    date: '2026-04-15T18:00:00-06:00',
-    location: 'AI Freedom Lab, 1910 21st Ave S, Nashville, TN',
+    description: 'Thank you, Vaco, for generously hosting our collective on the odd months of the year! Join us for an informative evening where local professional, amateur, and student community members (including you!) share “wires-out” demos, technical deep-dives, and discussions of AI-related projects or research they are working on, tools and techniques they have tried, or research papers/publications/presentations that they find insightful. This event is for those just starting to explore the technical aspects of AI, experienced AI professionals, and everyone in between. See you there!\n\nWe\'re are maintaining a list of folks who express an interest in sharing what they are working on. So, *please* *let Dan and Ram know if you\'d like to share something with the community via a message here on Meetup or in our Discord channel (https://discord.gg/H38zBzzC). And, if you know of hosts or sponsors for our community gatherings.*\n\n**AGENDA**\n0600 pm -- Setup/Meet & Greet "free time"\n0615 pm -- Demos/presentations (15- 20 min each)\n0745 pm -- Wrap-up\n0800 pm -- Vacate Room\n\n**THE PRESENTATIONS**\n\n* TBD -- Let us know what you\'d like to share!',
+    date: '2026-07-23T18:00:00-05:00',
+    location: 'Vaco, 5501 Virginia Way, Suite 120, Brentwood, TN',
+    currentRSVPs: 9,
+    registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408875/',
+    bgPath: 'bg-vicuna-13b.webp'
+  },
+  {
+    id: '312408899',
+    title: 'Field Reports: What Fellow Artificial Intelligencers Are Building & Exploring',
+    description: 'Thank you, AI Freedom Lab, for generously hosting our AI collective on the even months of the year!\n\nJoin us for this hybrid edition of "Community Demo Day!" We’re excited to hear from community members working in Product, UX and AI as they show off their hard work. We\'ll hear about the problem they solved, see their product, and lessons learned along the way. Community members will present for about 15 minutes each including Q&A.\n\nWe\'re are maintaining a list of folks who express an interest in sharing what they are working on. So, *please* *let Dan and Ram know if you\'d like to share something with the community via a message here on Meetup or in our Discord channel (https://discord.gg/H38zBzzC). And, if you know of hosts or sponsors for our community gatherings.*\n\n**AGENDA**\n0600 pm -- Setup/Meet & Greet "free time"\n0615 pm -- Demos/presentations (15- 20 min each)\n0745 pm -- Wrap-up\n0800 pm -- Vacate Room\n\n**THE PRESENTATIONS**\n\n* **[Ray Arceneaux, MBA](https://www.linkedin.com/in/rayarceneaux/) - [Agree Zone](https://agreezone.ai/):** A smart negotiation platform for real estate professionals, built with Claude Code and Replit.\n* **[Ean Krenzin-Blank](https://www.linkedin.com/in/ean-krenzin-blank-3b180b137/) -** Breaking down problems for AI\n* **[Mike Gallers](https://www.linkedin.com/in/mike-gallers/) -** A webapp built entirely with the assistance of Claude to track vehicle and home maintenance.\n* Speaker TBA',
+    date: '2026-06-17T18:00:00-05:00',
+    location: 'AI Freedom Lab, 1912 21st Ave S, Nashville, TN',
+    currentRSVPs: 36,
+    registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408899/',
+    bgPath: 'bg-vicuna-13b.webp'
+  },
+  {
+    id: '312408865',
+    title: 'Field Reports: What Fellow Artificial Intelligencers Are Building & Exploring',
+    description: 'Thank you, Vaco, for generously hosting our collective on the odd months of the year! Join us for an informative evening where local professional, amateur, and student community members (including you!) share “wires-out” demos, technical deep-dives, and discussions of AI-related projects or research they are working on, tools and techniques they have tried, or research papers/publications/presentations that they find insightful. This event is for those just starting to explore the technical aspects of AI, experienced AI professionals, and everyone in between. See you there!\n\nWe\'re are maintaining a list of folks who express an interest in sharing what they are working on. So, *please* *let Dan and Ram know if you\'d like to share something with the community via a message here on Meetup or in our Discord channel (https://discord.gg/H38zBzzC). And, if you know of hosts or sponsors for our community gatherings.*\n\n**AGENDA**\n0600 pm -- Setup/Meet & Greet "free time"\n0615 pm -- Demos/presentations (15- 20 min each)\n0745 pm -- Wrap-up\n0800 pm -- Vacate Room\n\n**THE PRESENTATIONS**\n\n* Satoshi -- From Retrieval to Readability: Structuring RAG Outputs for Decision-Making\n* Scott Hawley -- Recent work on hierarchical multi-scale representation learning for music understanding and generation\n* BettyAnn - zero to first AI-developed project\n* Dan - DESIGN.md',
+    date: '2026-05-28T18:00:00-05:00',
+    location: 'Vaco, 5501 Virginia Way, Suite 120, Brentwood, TN',
+    currentRSVPs: 45,
+    registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408865/',
+    bgPath: 'bg-vicuna-13b.webp'
+  },
+  {
+    id: '312408891',
+    title: 'Field Reports: What Fellow Artificial Intelligencers Are Building & Exploring',
+    description: 'Thank you, AI Freedom Lab, for generously hosting our AI collective on the even months of the year! Join us for an insight-packed evening where local professional, amateur, and student community members (including you!) share “wires-out” demos, technical deep-dives, and discussions of AI-related projects or research they are working on, tools and techniques they have tried, or research papers/publications/presentations that they find insightful. This event is for those just starting to explore the technical aspects of AI, experienced AI professionals, and everyone in between. See you here!\n\nWe\'re are maintaining a list of folks who express an interest in sharing what they are working on. So, *please* *let Dan and Ram know if you\'d like to share something with the community via a message here on Meetup, in our Discord channel* ([https://discord.com/invite/H38zBzzC](https://discord.com/invite/H38zBzzC)), or in the LinkedIn group (https://www.linkedin.com/groups/15689171/) . *And, if you know of hosts or sponsors for our community gatherings.*\n\n**AGENDA**\n0600 pm -- Setup/Meet & Greet "free time"\n0615 pm -- Demos/presentations (15- 20 min each)\n0745 pm -- Wrap-up\n0800 pm -- Vacate Room\n\n**THE PRESENTATIONS**\n\n* Carlton Davis will show how he is building a Claude skill that generates a spreadsheet to calculate and categorize his business expenses from inputs are an export of his Google Calendar and AMEX statements.\n* Rajeev Gupta will show us how he’s overcoming challenges slicing JIRA data in ways the platform doesn\'t natively support, despite having no coding background and lacking dedicated engineering support.\n* Ross Miller will demonstrate ways to improve the safety of AI responses over time for highly regulated industries like healthcare by harnessing them with type-safe error handling, automated enforcement scripts, structured adversarial review, and root cause analyses to improve safety over time.\n* Matthias Debernardini will walk us through three projects he developed: an iroh-based (https://www.iroh.computer/) peer-to-peer AI gateway and two apps he\'s using it for: one a calorie/kitchen/peptide tracker, and the second an agent bridge for Hermes (https://hermes-agent.nousresearch.com/).',
+    date: '2026-04-15T18:00:00-05:00',
+    location: 'AI Freedom Lab, 1912 21st Ave S, Nashville, TN',
     currentRSVPs: 63,
-    registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408891',
+    registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408891/',
     bgPath: 'bg-vicuna-13b.webp'
   },
   {
-    id: 'event-6',
+    id: '312408860',
     title: 'Field Reports: What Fellow Artificial Intelligencers Are Building & Exploring',
-    description: 'Community members share demos and technical presentations on AI projects.\n\nFeatured presenters:\n• River Kanies on CyberMonk (LLM philosophy exploration)\n• Ryan Mitchell on Nihongo Convo (Japanese language learning app)\n• Hunter Phillips on gradio.app deployment',
-    date: '2026-03-26T18:00:00-06:00',
+    description: 'Thank you, Vaco, for generously hosting our collective on the odd months of the year! Join us for an informative evening where local professional, amateur, and student community members (including you!) share “wires-out” demos, technical deep-dives, and discussions of AI-related projects or research they are working on, tools and techniques they have tried, or research papers/publications/presentations that they find insightful. This event is for those just starting to explore the technical aspects of AI, experienced AI professionals, and everyone in between. See you there!\n\nWe\'re are maintaining a list of folks who express an interest in sharing what they are working on. So, *please* *let Dan and Ram know if you\'d like to share something with the community via a message here on Meetup or in our Discord channel (https://discord.gg/H38zBzzC). And, if you know of hosts or sponsors for our community gatherings.*\n\n**AGENDA**\n0600 pm -- Setup/Meet & Greet "free time"\n0615 pm -- Demos/presentations (15- 20 min each)\n0745 pm -- Wrap-up\n0800 pm -- Vacate Room\n\n**THE PRESENTATIONS**\n\n* Satoshi - RAG orchestration using tabular data and memory\n* Erin -- Demo and technical walkthrough of Applicraft\n* Misty - Learnings from recent AI explorations\n* TBD - Open slot',
+    date: '2026-03-26T18:00:00-05:00',
     location: 'Vaco Nashville, 5501 Virginia Way Suite 120, Brentwood, TN',
     currentRSVPs: 54,
-    registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408860',
+    registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408860/',
     bgPath: 'bg-vicuna-13b.webp'
   },
   {
@@ -105,7 +135,7 @@ export const events: Event[] = [
     currentRSVPs: 18,
     registrationUrl: 'https://www.meetup.com/nashville-ai-engineering/events/',
     bgPath: 'bg-vicuna-13b.webp'
-  },
+  }
 ];
 
 // Helper functions

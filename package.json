@@ -16,6 +16,9 @@
     "lint": "npm run lint:prettier && npm run lint:eslint",
     "lint:prettier": "prettier --write \"src/**/*.{css,astro}\"",
     "lint:eslint": "eslint \"src/**/*.{js,mjs,ts}\"",
+    "meetup:sync": "node scripts/meetup-sync.mjs --write",
+    "meetup:sync:check": "node scripts/meetup-sync.mjs",
+    "test:node": "node --test tests/**/*.test.mjs",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "test": "cypress run"
