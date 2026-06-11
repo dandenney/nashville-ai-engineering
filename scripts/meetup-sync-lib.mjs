@@ -84,6 +84,39 @@ function normalizeWhitespace(text) {
   return text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim();
 }
 
+function stripMarkdownInline(text) {
+  return text
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/__([^_]+)__/g, '$1')
+    .replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '$1')
+    .replace(/(?<!_)_([^_]+)_(?!_)/g, '$1');
+}
+
+function normalizeDescription(text) {
+  const normalized = normalizeWhitespace(text);
+  if (!normalized) {
+    return normalized;
+  }
+
+  const lines = normalized.split('\n').map((line) => {
+    const trimmed = line.trim();
+    if (!trimmed) {
+      return '';
+    }
+
+    const bulletMatch = trimmed.match(/^(?:[*-])\s+(.*)$/);
+    if (bulletMatch) {
+      return `• ${stripMarkdownInline(bulletMatch[1]).trim()}`;
+    }
+
+    return stripMarkdownInline(trimmed);
+  });
+
+  return lines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+
 function formatLocation(venue) {
   if (!venue || typeof venue !== 'object') {
     return undefined;
@@ -101,7 +134,7 @@ export function formatSiteEvent(meetupEvent, options = {}) {
   const siteEvent = {
     id: String(meetupEvent.id),
     title: String(meetupEvent.title ?? '').trim(),
-    description: normalizeWhitespace(String(meetupEvent.description ?? '')),
+    description: normalizeDescription(String(meetupEvent.description ?? '')),
     date: String(meetupEvent.dateTime ?? '').trim(),
     location: formatLocation(meetupEvent.venue),
     currentRSVPs: Number(meetupEvent.goingCount?.totalCount ?? 0),

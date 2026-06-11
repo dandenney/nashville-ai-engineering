@@ -113,6 +113,30 @@ test('formatSiteEvent maps meetup event data into the site event shape', () => {
   });
 });
 
+test('formatSiteEvent strips markdown formatting and converts markdown bullets to plain-text bullets', () => {
+  const siteEvent = formatSiteEvent({
+    id: '312408899',
+    title: 'Field Reports',
+    description:
+      'Welcome to **Community Demo Day**.\n\n**THE PRESENTATIONS**\n\n* **[Ray Arceneaux](https://example.com/ray)** - Built a tool with `Claude Code`\n* _Ean_ - Breaking down problems for AI',
+    dateTime: '2026-06-17T18:00:00-05:00',
+    eventUrl: 'https://www.meetup.com/artificialintelligencers/events/312408899/',
+    goingCount: { totalCount: 35 },
+    venue: {
+      name: 'AI Freedom Lab',
+      address: '1912 21st Ave S',
+      city: 'Nashville',
+      state: 'TN',
+    },
+  });
+
+  assert.equal(
+    siteEvent.description,
+    'Welcome to Community Demo Day.\n\nTHE PRESENTATIONS\n\n• Ray Arceneaux - Built a tool with Claude Code\n• Ean - Breaking down problems for AI',
+  );
+  assert.doesNotMatch(siteEvent.description, /\[[^\]]+\]\([^)]*\)|[*_`]/);
+});
+
 test('mergeEvents updates existing events and adds newly discovered upcoming events', () => {
   const existingEvents = [
     {
