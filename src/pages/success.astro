@@ -2,18 +2,18 @@
 import Layout from '../components/Layout.astro';
 ---
 
-<Layout title="Astro Toolbox">
-  <div class="container">
-    <main>
-      <h1>Submission Received!</h1>
-      <p>
-        Thank you for your feedback! Head back to the <a href="/">home page</a>.
-      </p>
-    </main>
-  </div>
+<Layout title="Duly recorded — Artificial Intelligencers">
+  <main
+    class="mx-auto flex min-h-svh w-full max-w-3xl flex-col justify-center px-6 py-24 text-center"
+  >
+    <p class="data text-verdigris-300">Submission received</p>
+    <h1 class="section-title mt-6">Duly recorded.</h1>
+    <p class="mx-auto mt-7 max-w-[48ch] text-lg leading-[1.7]">
+      Thank you. Dan or Ram will be in touch about getting you on an upcoming
+      agenda.
+    </p>
+    <div class="mt-10">
+      <a href="/" class="btn btn-ghost btn-md">Back to the society</a>
+    </div>
+  </main>
 </Layout>
-<style>
-  html {
-    margin: 0 30px;
-  }
-</style>

@@ -1,0 +1,181 @@
+---
+import {
+  getNextEvent,
+  getPastEvents,
+  formatEventTime,
+  formatFullDate,
+} from '../data/events';
+
+const next = getNextEvent();
+const meetupNumber = String(getPastEvents().length + 1).padStart(2, '0');
+
+// Event descriptions keep presenters as "• Name on Topic" lines
+const lines = next ? next.description.split('\n').filter(Boolean) : [];
+const presenters = lines
+  .filter((l) => l.trim().startsWith('•'))
+  .map((l) => l.replace(/^\s*•\s*/, ''));
+const intro = lines
+  .filter(
+    (l) => !l.trim().startsWith('•') && !l.startsWith('Featured presenters'),
+  )
+  .join(' ');
+
+const mapsUrl = next?.location
+  ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(next.location)}`
+  : null;
+
+// "Wednesday, February 18, 2026" → ["Wednesday", "February 18", "2026"]
+const fullDate = next ? formatFullDate(next.date) : null;
+const [weekday, monthDay, year] = fullDate
+  ? (fullDate.match(/^(\w+), (.+), (\d{4})$/)?.slice(1) ?? [
+      null,
+      fullDate,
+      null,
+    ])
+  : [null, null, null];
+---
+
+<section
+  id="next"
+  class="mx-auto w-full max-w-7xl scroll-mt-10 px-6 pt-28 pb-24 sm:pt-36 lg:px-10"
+>
+  <div class="flex items-baseline justify-between gap-6" data-reveal>
+    <h2 class="data text-verdigris-300">
+      Meetup № {meetupNumber} · {next ? 'RSVP open' : 'Forthcoming'}
+    </h2>
+    <span class="data hidden sm:inline">One evening, monthly</span>
+  </div>
+  <hr class="rule-double mt-4" data-rule-scroll />
+
+  {
+    next ? (
+      <div class="mt-14 grid gap-14 lg:grid-cols-12 lg:gap-10">
+        <div class="lg:col-span-5">
+          <p class="data">{weekday}</p>
+          <p class="masthead mt-3 text-[clamp(3rem,1.2rem+6.5vw,6.5rem)]">
+            {monthDay}
+          </p>
+          <p class="masthead mt-1 text-[clamp(1.6rem,1rem+2.4vw,2.8rem)] text-gold-500">
+            {year}
+          </p>
+
+          <dl class="mt-10 max-w-sm space-y-5">
+            <div class="flex items-baseline justify-between gap-6">
+              <dt class="data">Doors</dt>
+              <dd class="text-right text-lg text-gold-100">
+                {formatEventTime(next.date)}
+              </dd>
+            </div>
+            <hr class="rule-hair" />
+            <div class="flex items-baseline justify-between gap-6">
+              <dt class="data">Venue</dt>
+              <dd class="text-right text-lg text-gold-100">
+                {mapsUrl ? (
+                  <a
+                    href={mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="underline decoration-gold-700 underline-offset-4 transition-colors hover:decoration-verdigris-500"
+                  >
+                    {next.location}
+                  </a>
+                ) : (
+                  next.location
+                )}
+              </dd>
+            </div>
+            <hr class="rule-hair" />
+            <div class="flex items-baseline justify-between gap-6">
+              <dt class="data">Admission</dt>
+              <dd class="text-right text-lg text-gold-100">Free, all levels</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="lg:col-span-6 lg:col-start-7">
+          <h3 class="section-title text-[clamp(1.75rem,1.2rem+2.2vw,3rem)]">
+            {next.title}
+          </h3>
+          {intro && (
+            <p class="mt-6 max-w-[60ch] text-lg leading-[1.7]">{intro}</p>
+          )}
+
+          {presenters.length > 0 && (
+            <div class="mt-10">
+              <p class="data">At the lectern</p>
+              <ul class="mt-4 space-y-3">
+                {presenters.map((p) => (
+                  <li class="border-b border-gold-500/20 pb-3 text-lg text-gold-100 italic">
+                    {p}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div class="mt-12 flex flex-wrap items-center gap-x-6 gap-y-4">
+            <a
+              href={next.registrationUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary btn-lg"
+            >
+              RSVP on Meetup ↗
+            </a>
+            {typeof next.currentRSVPs === 'number' && (
+              <span class="data text-verdigris-300">
+                {`${next.currentRSVPs} ${next.currentRSVPs === 1 ? 'intelligencer' : 'intelligencers'} attending`}
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+    ) : (
+      <div class="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-10">
+        <div class="lg:col-span-7" data-reveal>
+          <p class="masthead text-[clamp(2.8rem,1rem+6vw,6rem)]">
+            Convening soon.
+          </p>
+          <p class="mt-8 max-w-[52ch] text-lg leading-[1.7] sm:text-xl">
+            The society is between meetups while we line up the next venue. Join
+            the Meetup group and you will be the first to hear; bring a demo and
+            you will be the first on the agenda.
+          </p>
+          <div class="mt-11 flex flex-wrap gap-4">
+            <a
+              href="https://www.meetup.com/artificialintelligencers/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary btn-lg"
+            >
+              Join on Meetup ↗
+            </a>
+            <a href="#present" class="btn btn-ghost btn-lg">
+              Offer a talk ↓
+            </a>
+          </div>
+        </div>
+        <div class="lg:col-span-4 lg:col-start-9" data-reveal>
+          <dl class="space-y-5">
+            <div class="flex items-baseline justify-between gap-6">
+              <dt class="data">Cadence</dt>
+              <dd class="text-right text-lg text-gold-100">Monthly, midweek</dd>
+            </div>
+            <hr class="rule-hair" />
+            <div class="flex items-baseline justify-between gap-6">
+              <dt class="data">Venues</dt>
+              <dd class="text-right text-lg text-gold-100">
+                Breweries, libraries, offices
+              </dd>
+            </div>
+            <hr class="rule-hair" />
+            <div class="flex items-baseline justify-between gap-6">
+              <dt class="data">Admission</dt>
+              <dd class="text-right text-lg text-gold-100">Free, all levels</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    )
+  }
+</section>

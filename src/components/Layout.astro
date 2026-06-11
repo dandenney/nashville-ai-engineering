@@ -1,60 +1,115 @@
 ---
+import '@fontsource/libre-caslon-display';
+import '@fontsource/libre-caslon-text';
+import '@fontsource/libre-caslon-text/400-italic.css';
+import '@fontsource/libre-caslon-text/700.css';
+import '@fontsource/fragment-mono';
+import '../styles/global.css';
+import { getNextEvent } from '../data/events';
+
 export interface Props {
   title: string;
 }
 
 const { title } = Astro.props as Props;
-import '../styles/global.css';
+
+const description =
+  'The Artificial Intelligencers: a monthly Nashville meetup for anyone, beginner to expert, exploring building with AI. Share what you are learning, see what your neighbors are building.';
+
+const siteUrl = 'https://nashville-ai-engineering.netlify.app';
+
+const nextEvent = getNextEvent();
+
+const jsonLd: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Artificial Intelligencers',
+    alternateName: 'Nashville AI Engineering',
+    url: siteUrl,
+    logo: `${siteUrl}/artificial-intelligencers.webp`,
+    description,
+    sameAs: ['https://www.meetup.com/artificialintelligencers/'],
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Nashville',
+      addressRegion: 'TN',
+      addressCountry: 'US',
+    },
+  },
+];
+
+if (nextEvent) {
+  jsonLd.push({
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: nextEvent.title,
+    description: nextEvent.description,
+    startDate: nextEvent.date,
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    eventStatus: 'https://schema.org/EventScheduled',
+    location: {
+      '@type': 'Place',
+      name: nextEvent.location ?? 'Nashville, TN',
+      address: nextEvent.location ?? 'Nashville, TN',
+    },
+    organizer: {
+      '@type': 'Organization',
+      name: 'Artificial Intelligencers',
+      url: siteUrl,
+    },
+    offers: {
+      '@type': 'Offer',
+      url: nextEvent.registrationUrl,
+      price: '0',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+  });
+}
 ---
 
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Nashville AI Engineering - Meetups focused on building with AI. Join our community of developers, engineers, and AI enthusiasts in Nashville."
-    />
-    <meta
-      name="keywords"
-      content="AI, artificial intelligence, machine learning, Nashville, meetup, engineering, developers, tech community"
-    />
-    <meta name="author" content="Nashville AI Engineering" />
+    <meta name="description" content={description} />
+    <meta name="author" content="Artificial Intelligencers" />
+    <link rel="canonical" href={`${siteUrl}/`} />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta
-      property="og:url"
-      content="https://nashville-ai-engineering.netlify.app/"
-    />
+    <meta property="og:url" content={`${siteUrl}/`} />
     <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${siteUrl}/images/og.jpg`} />
+    <meta property="og:image:width" content="1536" />
+    <meta property="og:image:height" content="1024" />
     <meta
-      property="og:description"
-      content="Nashville AI Engineering - Meetups focused on building with AI. Join our community of developers, engineers, and AI enthusiasts in Nashville."
+      property="og:image:alt"
+      content="Engraved emblem of the Artificial Intelligencers, a Nashville AI meetup"
     />
-    <meta property="og:image" content="/nashville-ai-engineering.svg" />
+    <meta property="og:site_name" content="Artificial Intelligencers" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta
-      property="twitter:url"
-      content="https://nashville-ai-engineering.netlify.app/"
-    />
-    <meta property="twitter:title" content={title} />
-    <meta
-      property="twitter:description"
-      content="Nashville AI Engineering - Meetups focused on building with AI. Join our community of developers, engineers, and AI enthusiasts in Nashville."
-    />
-    <meta property="twitter:image" content="/nashville-ai-engineering.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${siteUrl}/images/og.jpg`} />
 
-    <!-- Favicon and theme -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <meta name="theme-color" content="#84cc16" />
+    <meta name="theme-color" content="#1d231f" />
 
     <title>{title}</title>
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(jsonLd)}
+      is:inline
+    />
   </head>
-  <body class="bg-slate-100 dark:bg-slate-900 text-gray-900 dark:text-white">
+  <body>
     <slot />
   </body>
 </html>

@@ -1,0 +1,137 @@
+---
+// Netlify form: keep the form name and field names unchanged so existing
+// submissions and notifications keep working.
+---
+
+<section
+  id="present"
+  class="mx-auto w-full max-w-7xl scroll-mt-10 px-6 py-24 sm:py-32 lg:px-10"
+>
+  <div class="flex items-baseline justify-between gap-6" data-reveal>
+    <h2 class="data text-verdigris-300">Call for presenters</h2>
+    <span class="data hidden sm:inline">Rolling, no deadline</span>
+  </div>
+  <hr class="rule-double mt-4" data-rule-scroll />
+
+  <div class="mt-14 grid gap-14 lg:grid-cols-12 lg:gap-10">
+    <div class="lg:col-span-5" data-reveal>
+      <p class="section-title max-w-[14ch]">Take the lectern.</p>
+      <p class="mt-7 max-w-[48ch] text-lg leading-[1.7]">
+        A talk, a wires-out demo, or a discussion you want to lead. Five minutes
+        or twenty-five. Works in progress encouraged; instructive dead ends
+        celebrated.
+      </p>
+      <p class="mt-5 max-w-[48ch] leading-[1.7] text-gold-500">
+        First time presenting anywhere? This is the room to do it in.
+      </p>
+    </div>
+
+    <div class="lg:col-span-6 lg:col-start-7">
+      <form
+        id="feedback-form"
+        class="space-y-7"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        name="feedback"
+        data-reveal
+      >
+        <input type="hidden" name="form-name" value="feedback" />
+        <p class="hidden">
+          <label>
+            Don't fill this out if you're human: <input name="bot-field" />
+          </label>
+        </p>
+
+        <div>
+          <label class="form-label" for="name">Name</label>
+          <input
+            id="name"
+            type="text"
+            name="name"
+            placeholder="Ada of Antioch"
+            class="form-input"
+          />
+        </div>
+
+        <div>
+          <label class="form-label" for="email">Email address</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            required
+            placeholder="ada@example.com"
+            autocomplete="email"
+            class="form-input"
+          />
+        </div>
+
+        <div>
+          <label class="form-label" for="feedback"
+            >What would you like to share?</label
+          >
+          <textarea
+            id="feedback"
+            name="feedback"
+            required
+            placeholder="A demo of the agent I can't stop tinkering with"
+            rows="4"
+            class="form-textarea"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-md w-full sm:w-auto">
+          Submit to the society
+        </button>
+      </form>
+
+      <div id="success-message" class="hidden" aria-live="polite">
+        <hr class="rule-double" />
+        <p class="mt-8 font-display text-3xl text-gold-100">Duly recorded.</p>
+        <p class="mt-4 text-lg leading-[1.7]">
+          Thank you. Dan or Ram will be in touch about getting you on an
+          upcoming agenda.
+        </p>
+        <hr class="rule-double mt-8" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Submit to Netlify without leaving the page
+  document
+    .getElementById('feedback-form')
+    ?.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const form = e.target as HTMLFormElement;
+      const formData = new FormData(form);
+      const submitButton = form.querySelector(
+        'button[type="submit"]',
+      ) as HTMLButtonElement;
+      const originalText = submitButton.textContent;
+
+      submitButton.disabled = true;
+      submitButton.textContent = 'Submitting…';
+
+      fetch('/', {
+        method: 'POST',
+        body: formData,
+      })
+        .then(() => {
+          form.style.display = 'none';
+          document
+            .getElementById('success-message')
+            ?.classList.remove('hidden');
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          submitButton.textContent = 'Error — try again';
+          submitButton.disabled = false;
+          setTimeout(() => {
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+          }, 3000);
+        });
+    });
+</script>

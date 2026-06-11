@@ -1,26 +1,26 @@
 ---
 import Layout from '../components/Layout.astro';
-import FeedbackForm from '../components/FeedbackForm.astro';
-import MeetupEvents from '../components/MeetupEvents.astro';
-import UpcomingEvent from '../components/UpcomingEvent.astro';
-import HeroContent from '../components/HeroContent.astro';
+import Hero from '../components/Hero.astro';
+import NextMeetup from '../components/NextMeetup.astro';
+import Definition from '../components/Definition.astro';
+import AthensInterstitial from '../components/AthensInterstitial.astro';
+import Proceedings from '../components/Proceedings.astro';
+import CallForPresenters from '../components/CallForPresenters.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 ---
 
-<Layout title="Nashville AI Engineering - AI Meetups & Community">
-  <main>
-    <div class="relative isolate overflow-hidden ">
-    
-      <div
-        class="mx-auto max-w-7xl px-6 pt-10 pb-24 sm:pb-32 lg:flex lg:justify-between lg:gap-x-8 lg:px-8 lg:py-20"
-      >
-        <HeroContent />
-        <UpcomingEvent />
-      </div>
-    </div>
-
-    <MeetupEvents />
-
-    <FeedbackForm />
-
+<Layout title="Artificial Intelligencers — Nashville's AI Meetup">
+  <main id="top">
+    <Hero />
+    <NextMeetup />
+    <Definition />
+    <AthensInterstitial />
+    <Proceedings />
+    <CallForPresenters />
   </main>
+  <SiteFooter />
+
+  <script>
+    import '../scripts/motion';
+  </script>
 </Layout>

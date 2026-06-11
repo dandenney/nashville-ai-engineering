@@ -1,0 +1,49 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="mx-auto w-full max-w-7xl px-6 pt-8 pb-12 lg:px-10">
+  <hr class="rule-double" />
+  <div
+    class="mt-10 flex flex-col gap-10 sm:flex-row sm:items-end sm:justify-between"
+  >
+    <div class="flex items-center gap-5">
+      <img
+        src="/artificial-intelligencers.webp"
+        alt="Seal of the Artificial Intelligencers: an owl above a circuit-board brain, ringed in laurel"
+        width="72"
+        height="74"
+        loading="lazy"
+        class="w-16"
+      />
+      <div>
+        <p class="font-display text-xl text-gold-100">
+          Artificial Intelligencers
+        </p>
+        <p class="data mt-1">Est. 2025 · Nashville, Tennessee</p>
+      </div>
+    </div>
+
+    <nav class="flex flex-wrap gap-x-8 gap-y-2" aria-label="Footer">
+      <a
+        href="https://www.meetup.com/artificialintelligencers/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="data transition-colors hover:text-gold-100"
+      >
+        Meetup ↗
+      </a>
+      <a href="#next" class="data transition-colors hover:text-gold-100"
+        >Next meetup</a
+      >
+      <a href="#proceedings" class="data transition-colors hover:text-gold-100"
+        >Proceedings</a
+      >
+    </nav>
+  </div>
+
+  <p class="data mt-12 text-gold-700">
+    © {year} · Set in Caslon and Fragment Mono · Built by the society, humans and
+    machines together
+  </p>
+</footer>

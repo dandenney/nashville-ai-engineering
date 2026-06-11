@@ -1,0 +1,98 @@
+---
+// Past meetups as a numbered ledger: the society's proceedings.
+import { getPastEvents, formatEventDate } from '../data/events';
+
+const past = getPastEvents(); // newest first
+const total = past.length;
+
+interface Entry {
+  number: string;
+  date: string;
+  title: string;
+  venue: string | undefined;
+  attended: number | undefined;
+  intro: string;
+  presenters: string[];
+}
+
+const entries: Entry[] = past.map((event, i) => {
+  const lines = event.description.split('\n').filter(Boolean);
+  const presenters = lines
+    .filter((l) => l.trim().startsWith('•'))
+    .map((l) => l.replace(/^\s*•\s*/, ''));
+  const intro =
+    lines.find(
+      (l) => !l.trim().startsWith('•') && !l.startsWith('Featured presenters'),
+    ) ?? '';
+  return {
+    number: String(total - i).padStart(2, '0'),
+    date: formatEventDate(event.date),
+    title: event.title,
+    venue: event.location?.split(',')[0],
+    attended: event.currentRSVPs,
+    intro,
+    presenters,
+  };
+});
+---
+
+<section
+  id="proceedings"
+  class="mx-auto w-full max-w-7xl scroll-mt-10 overflow-x-clip px-6 py-24 sm:py-32 lg:px-10"
+>
+  <div class="flex items-baseline justify-between gap-6" data-reveal>
+    <h2 class="data text-verdigris-300">Proceedings of the society</h2>
+    <span class="data hidden sm:inline">{total} meetups to date</span>
+  </div>
+  <hr class="rule-double mt-4" data-rule-scroll />
+
+  <p class="section-title mt-14 max-w-[22ch]" data-reveal>
+    What the society has convened upon.
+  </p>
+
+  <ol class="mt-16" data-reveal-group>
+    {
+      entries.map((entry) => (
+        <li class="border-b border-gold-500/20 first:border-t">
+          <div class="ledger-row grid gap-x-10 gap-y-4 py-10 sm:py-12 lg:grid-cols-12">
+            <div class="flex items-baseline gap-6 lg:col-span-3 lg:block">
+              <span class="ledger-no masthead text-4xl text-gold-700 sm:text-5xl">
+                № {entry.number}
+              </span>
+              <div class="data lg:mt-4">{entry.date}</div>
+              <div class="data hidden lg:mt-1 lg:block">{entry.venue}</div>
+            </div>
+
+            <div class="lg:col-span-7">
+              <h3 class="font-display text-2xl leading-snug text-gold-100 sm:text-3xl">
+                {entry.title}
+              </h3>
+              {entry.presenters.length > 0 ? (
+                <ul class="mt-5 space-y-1.5">
+                  {entry.presenters.map((p) => (
+                    <li class="text-base text-gold-300 italic sm:text-lg">
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                entry.intro && (
+                  <p class="mt-5 max-w-[62ch] leading-[1.7] text-gold-300">
+                    {entry.intro}
+                  </p>
+                )
+              )}
+              <div class="data mt-4 sm:hidden">{entry.venue}</div>
+            </div>
+
+            <div class="lg:col-span-2 lg:text-right">
+              {typeof entry.attended === 'number' && (
+                <span class="data">{entry.attended} convened</span>
+              )}
+            </div>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>

@@ -29,10 +29,16 @@
     "typescript": "^5.4.4"
   },
   "dependencies": {
+    "@fontsource/fragment-mono": "^5.2.8",
+    "@fontsource/libre-caslon-display": "^5.2.7",
+    "@fontsource/libre-caslon-text": "^5.2.7",
     "@tailwindcss/vite": "^4.1.11",
+    "@types/three": "^0.184.1",
     "astro": "^5.12.9",
     "cypress": "^13.7.2",
-    "tailwindcss": "^4.1.11"
+    "gsap": "^3.15.0",
+    "tailwindcss": "^4.1.11",
+    "three": "^0.184.0"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

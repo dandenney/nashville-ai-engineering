@@ -1,0 +1,128 @@
+---
+import { getNextEvent, formatEventDate } from '../data/events';
+
+const next = getNextEvent();
+---
+
+<section class="relative isolate flex min-h-svh flex-col overflow-hidden">
+  <!-- Owl constellation: particles assemble from the engraved seal -->
+  <div
+    class="pointer-events-none absolute inset-y-0 right-0 -z-10 w-full opacity-80 sm:opacity-100 lg:left-auto lg:w-[58%]"
+    data-owl-scene="/images/owl-engraving.webp"
+    aria-hidden="true"
+  >
+    <img
+      data-owl-fallback
+      src="/images/owl-engraving.webp"
+      alt=""
+      width="900"
+      height="900"
+      fetchpriority="high"
+      class="absolute inset-0 m-auto max-h-[82%] w-auto object-contain opacity-70"
+    />
+  </div>
+
+  <!-- Top bar -->
+  <header class="mx-auto w-full max-w-7xl px-6 pt-7 lg:px-10">
+    <nav class="flex items-baseline justify-between gap-6" aria-label="Site">
+      <a href="#top" class="data text-gold-200 no-underline">
+        Artificial&nbsp;Intelligencers
+      </a>
+      <div class="hidden items-baseline gap-8 sm:flex">
+        <a href="#next" class="data transition-colors hover:text-gold-100"
+          >Next meetup</a
+        >
+        <a
+          href="#proceedings"
+          class="data transition-colors hover:text-gold-100">Proceedings</a
+        >
+        <a href="#present" class="data transition-colors hover:text-gold-100"
+          >Present</a
+        >
+      </div>
+      <a
+        href="https://www.meetup.com/artificialintelligencers/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="data text-verdigris-300 transition-colors hover:text-verdigris-500"
+      >
+        Join&nbsp;↗
+      </a>
+    </nav>
+    <hr class="rule-double mt-5" data-rule-draw />
+  </header>
+
+  <!-- Masthead -->
+  <div
+    class="mx-auto flex w-full max-w-7xl grow flex-col justify-center px-6 pt-16 pb-24 lg:px-10"
+  >
+    <p class="data" data-hero-fade>
+      Est. 2025 · Nashville, Tennessee · 36.16° N, 86.78° W
+    </p>
+
+    <h1
+      class="masthead mt-6 max-w-[11ch] text-[clamp(3.4rem,1rem+10.5vw,9.5rem)]"
+      data-masthead
+    >
+      Artificial Intelligencers
+    </h1>
+
+    <p
+      class="mt-9 max-w-[46ch] text-lg leading-[1.65] text-gold-300 sm:text-xl"
+      data-hero-fade
+    >
+      A learned society for the AI age: a Nashville meetup supporting folks at
+      all levels who are exploring building with AI. One evening a month,
+      beginners to experts, demos encouraged.
+    </p>
+
+    <div class="mt-11 flex flex-wrap items-center gap-4" data-hero-fade>
+      <a
+        href="https://www.meetup.com/artificialintelligencers/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-primary btn-lg"
+      >
+        Join on Meetup
+      </a>
+      <a href="#next" class="btn btn-ghost btn-lg"> Next meetup ↓ </a>
+    </div>
+  </div>
+
+  <!-- Ticker strip -->
+  <a
+    href="#next"
+    class="group block border-t border-gold-500/25 transition-colors hover:bg-gold-500/5"
+    data-hero-fade
+  >
+    <div
+      class="mx-auto flex w-full max-w-7xl flex-wrap items-baseline justify-between gap-x-8 gap-y-1 px-6 py-4 lg:px-10"
+    >
+      <span class="data text-verdigris-300">Next meetup</span>
+      <span class="data text-gold-200">
+        {
+          next
+            ? `${formatEventDate(next.date)} — RSVP open`
+            : 'Convening soon — venue in the works'
+        }
+      </span>
+      <span
+        class="data hidden transition-transform duration-500 group-hover:translate-y-0.5 sm:inline"
+      >
+        ↓
+      </span>
+    </div>
+  </a>
+</section>
+
+<script>
+  // Three.js is heavy: only fetch it when the scene will actually run.
+  const host = document.querySelector<HTMLElement>('[data-owl-scene]');
+  if (host && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    import('../scripts/owl-scene').then(({ initOwlScene }) =>
+      initOwlScene(host).catch(() => {
+        /* static engraving remains visible */
+      }),
+    );
+  }
+</script>
