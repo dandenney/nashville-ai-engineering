@@ -9,16 +9,73 @@ import {
 const next = getNextEvent();
 const meetupNumber = String(getPastEvents().length + 1).padStart(2, '0');
 
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function renderDescriptionFallbackHtml(text: string): string {
+  const blocks = text
+    .trim()
+    .split(/\n{2,}/)
+    .map((block) =>
+      block
+        .split('\n')
+        .map((line) => line.trim())
+        .filter(Boolean),
+    )
+    .filter((block) => block.length > 0);
+
+  return blocks
+    .map((lines) => {
+      if (lines.every((line) => /^(?:•|[*-])\s+/.test(line))) {
+        const items = lines
+          .map((line) => line.replace(/^(?:•|[*-])\s+/, ''))
+          .map((line) =>
+            escapeHtml(line).replace(
+              /(https?:\/\/[^\s<)]+)/g,
+              '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>',
+            ),
+          )
+          .map((line) => `<li>${line}</li>`)
+          .join('');
+        return `<ul>${items}</ul>`;
+      }
+
+      const paragraph = lines
+        .map((line) =>
+          escapeHtml(line).replace(
+            /(https?:\/\/[^\s<)]+)/g,
+            '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>',
+          ),
+        )
+        .join('<br />');
+      return `<p>${paragraph}</p>`;
+    })
+    .join('\n');
+}
+
 // Event descriptions keep presenters as "• Name on Topic" lines
 const lines = next ? next.description.split('\n').filter(Boolean) : [];
 const presenters = lines
   .filter((l) => l.trim().startsWith('•'))
   .map((l) => l.replace(/^\s*•\s*/, ''));
-const intro = lines
-  .filter(
-    (l) => !l.trim().startsWith('•') && !l.startsWith('Featured presenters'),
-  )
-  .join(' ');
+const descriptionBodyLines = lines.filter(
+  (l) =>
+    !l.trim().startsWith('•') &&
+    !/^(Featured presenters:?|THE PRESENTATIONS)$/i.test(l.trim()),
+);
+const descriptionBodyText = descriptionBodyLines.join('\n').trim();
+const descriptionHtml = next?.descriptionBodyHtml || next?.descriptionHtml;
+const introHtml =
+  descriptionHtml ||
+  (descriptionBodyText
+    ? renderDescriptionFallbackHtml(descriptionBodyText)
+    : '');
 
 const mapsUrl = next?.location
   ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(next.location)}`
@@ -96,8 +153,11 @@ const [weekday, monthDay, year] = fullDate
           <h3 class="section-title text-[clamp(1.75rem,1.2rem+2.2vw,3rem)]">
             {next.title}
           </h3>
-          {intro && (
-            <p class="mt-6 max-w-[60ch] text-lg leading-[1.7]">{intro}</p>
+          {introHtml && (
+            <div
+              class="meetup-copy mt-6 max-w-[60ch] text-lg leading-[1.7] [&_a]:underline [&_a]:decoration-gold-700 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-verdigris-500 [&_p+p]:mt-4 [&_ul]:mt-4 [&_ul]:space-y-2 [&_li]:text-gold-100 [&_code]:rounded [&_code]:bg-gold-500/10 [&_code]:px-1.5 [&_code]:py-0.5 [&_strong]:text-gold-100"
+              set:html={introHtml}
+            />
           )}
 
           {presenters.length > 0 && (

@@ -84,6 +84,99 @@ function normalizeWhitespace(text) {
   return text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim();
 }
 
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function escapeAttribute(text) {
+  return escapeHtml(text);
+}
+
+function isSafeUrl(url) {
+  return /^https?:\/\//i.test(String(url ?? '').trim());
+}
+
+function renderInlineHtml(text) {
+  const tokens = [];
+  const stash = (html) => {
+    const token = `@@HTMLTOKEN${tokens.length}@@`;
+    tokens.push({ token, html });
+    return token;
+  };
+
+  let rendered = escapeHtml(String(text ?? ''));
+
+  rendered = rendered.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/gi, (_match, label, url) => {
+    if (!isSafeUrl(url)) {
+      return escapeHtml(label);
+    }
+
+    return stash(
+      `<a href="${escapeAttribute(url)}" target="_blank" rel="noopener noreferrer">${label}</a>`,
+    );
+  });
+
+  rendered = rendered.replace(/(?<!["'>])(https?:\/\/[^\s<)]+)(?![^<]*>)/gi, (url) => {
+    if (!isSafeUrl(url)) {
+      return url;
+    }
+
+    return stash(
+      `<a href="${escapeAttribute(url)}" target="_blank" rel="noopener noreferrer">${url}</a>`,
+    );
+  });
+
+  rendered = rendered
+    .replace(/`([^`]+)`/g, (_match, value) => stash(`<code>${value}</code>`))
+    .replace(/\*\*([^*]+)\*\*/g, (_match, value) => stash(`<strong>${value}</strong>`))
+    .replace(/__([^_]+)__/g, (_match, value) => stash(`<strong>${value}</strong>`))
+    .replace(/(^|[^*])\*([^*]+)\*(?!\*)/g, (_match, prefix, value) => `${prefix}${stash(`<em>${value}</em>`)}`)
+    .replace(/(^|[^_])_([^_]+)_(?!_)/g, (_match, prefix, value) => `${prefix}${stash(`<em>${value}</em>`)}`);
+
+  for (const { token, html } of [...tokens].reverse()) {
+    rendered = rendered.replaceAll(token, html);
+  }
+
+  return rendered;
+}
+
+function descriptionBlocks(text) {
+  const normalized = normalizeWhitespace(text);
+  if (!normalized) {
+    return [];
+  }
+
+  return normalized
+    .split(/\n{2,}/)
+    .map((block) => block.split('\n').map((line) => line.trim()).filter(Boolean));
+}
+
+function renderDescriptionHtml(text) {
+  const blocks = descriptionBlocks(text);
+  if (!blocks.length) {
+    return '';
+  }
+
+  return blocks
+    .map((lines) => {
+      if (lines.every((line) => /^(?:•|[*-])\s+/.test(line))) {
+        const items = lines
+          .map((line) => line.replace(/^(?:•|[*-])\s+/, ''))
+          .map((line) => `<li>${renderInlineHtml(line)}</li>`)
+          .join('');
+        return `<ul>${items}</ul>`;
+      }
+
+      return `<p>${lines.map((line) => renderInlineHtml(line)).join('<br />')}</p>`;
+    })
+    .join('\n');
+}
+
 function stripMarkdownInline(text) {
   return text
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1')
@@ -117,6 +210,24 @@ function normalizeDescription(text) {
   return lines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
+function splitDescriptionBody(text) {
+  const normalized = normalizeWhitespace(text);
+  if (!normalized) {
+    return normalized;
+  }
+
+  const lines = normalized.split('\n');
+  const speakerHeadingIndex = lines.findIndex((line) =>
+    /^(featured presenters:?|the presentations)$/i.test(stripMarkdownInline(line).trim()),
+  );
+
+  if (speakerHeadingIndex === -1) {
+    return normalized;
+  }
+
+  return lines.slice(0, speakerHeadingIndex).join('\n').trim();
+}
+
 function formatLocation(venue) {
   if (!venue || typeof venue !== 'object') {
     return undefined;
@@ -131,10 +242,14 @@ function formatLocation(venue) {
 }
 
 export function formatSiteEvent(meetupEvent, options = {}) {
+  const rawDescription = String(meetupEvent.description ?? '');
+  const description = normalizeDescription(rawDescription);
   const siteEvent = {
     id: String(meetupEvent.id),
     title: String(meetupEvent.title ?? '').trim(),
-    description: normalizeDescription(String(meetupEvent.description ?? '')),
+    description,
+    descriptionHtml: renderDescriptionHtml(rawDescription),
+    descriptionBodyHtml: renderDescriptionHtml(splitDescriptionBody(rawDescription)),
     date: String(meetupEvent.dateTime ?? '').trim(),
     location: formatLocation(meetupEvent.venue),
     currentRSVPs: Number(meetupEvent.goingCount?.totalCount ?? 0),

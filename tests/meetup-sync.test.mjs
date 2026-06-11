@@ -105,6 +105,10 @@ test('formatSiteEvent maps meetup event data into the site event shape', () => {
     title: 'Field Reports: What Fellow Artificial Intelligencers Are Building & Exploring',
     description:
       'Community members share demos and technical presentations on AI projects.\n\nFeatured presenters:\n• Ray on Agree Zone\n• Ean on breaking down problems for AI',
+    descriptionHtml:
+      '<p>Community members share demos and technical presentations on AI projects.</p>\n<p>Featured presenters:<br />• Ray on Agree Zone<br />• Ean on breaking down problems for AI</p>',
+    descriptionBodyHtml:
+      '<p>Community members share demos and technical presentations on AI projects.</p>',
     date: '2026-06-17T18:00:00-05:00',
     location: 'AI Freedom Lab, 1912 21st Ave S, Nashville, TN',
     currentRSVPs: 35,
@@ -134,6 +138,15 @@ test('formatSiteEvent strips markdown formatting and converts markdown bullets t
     siteEvent.description,
     'Welcome to Community Demo Day.\n\nTHE PRESENTATIONS\n\n• Ray Arceneaux - Built a tool with Claude Code\n• Ean - Breaking down problems for AI',
   );
+  assert.equal(
+    siteEvent.descriptionHtml,
+    '<p>Welcome to <strong>Community Demo Day</strong>.</p>\n<p><strong>THE PRESENTATIONS</strong></p>\n<ul><li><strong><a href="https://example.com/ray" target="_blank" rel="noopener noreferrer">Ray Arceneaux</a></strong> - Built a tool with <code>Claude Code</code></li><li><em>Ean</em> - Breaking down problems for AI</li></ul>',
+  );
+  assert.equal(
+    siteEvent.descriptionBodyHtml,
+    '<p>Welcome to <strong>Community Demo Day</strong>.</p>',
+  );
+  assert.match(siteEvent.descriptionHtml, /<a href="https:\/\/example.com\/ray"/);
   assert.doesNotMatch(siteEvent.description, /\[[^\]]+\]\([^)]*\)|[*_`]/);
 });
 
