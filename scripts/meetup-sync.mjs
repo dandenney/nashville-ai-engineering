@@ -19,54 +19,6 @@ const DEFAULT_GROUP_URL = 'https://www.meetup.com/artificialintelligencers/';
 const DEFAULT_GROUP_URLNAME = 'artificialintelligencers';
 const EVENTS_FILE = path.resolve('src/data/events.ts');
 
-function parseRsvpOverrides(rawValue) {
-  if (!rawValue) {
-    return {};
-  }
-
-  let parsed;
-  try {
-    parsed = JSON.parse(rawValue);
-  } catch (error) {
-    throw new Error(
-      `Invalid MEETUP_SYNC_RSVP_OVERRIDES JSON: ${error instanceof Error ? error.message : String(error)}`,
-    );
-  }
-
-  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
-    throw new Error('MEETUP_SYNC_RSVP_OVERRIDES must be a JSON object mapping event IDs to RSVP counts');
-  }
-
-  return Object.fromEntries(
-    Object.entries(parsed).map(([eventId, count]) => {
-      const normalizedCount = Number(count);
-      if (!Number.isFinite(normalizedCount)) {
-        throw new Error(`Invalid RSVP override for event ${eventId}: ${count}`);
-      }
-
-      return [String(eventId), normalizedCount];
-    }),
-  );
-}
-
-function applyRsvpOverrides(events, overrides) {
-  if (!Object.keys(overrides).length) {
-    return events;
-  }
-
-  return events.map((event) => {
-    const override = overrides[String(event.id)];
-    if (override === undefined) {
-      return event;
-    }
-
-    return {
-      ...event,
-      currentRSVPs: override,
-    };
-  });
-}
-
 function parseArgs(argv) {
   return {
     write: argv.includes('--write'),
@@ -133,14 +85,10 @@ function printSummary(summary, quiet) {
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
-  const rsvpOverrides = parseRsvpOverrides(process.env.MEETUP_SYNC_RSVP_OVERRIDES);
   const source = await readFile(EVENTS_FILE, 'utf8');
   const existingEvents = parseEventsArrayFromSource(source);
   const scrapedEvents = await scrapeMeetupEvents(args);
-  const mergedEvents = applyRsvpOverrides(
-    mergeEvents(existingEvents, scrapedEvents, { now: new Date() }),
-    rsvpOverrides,
-  );
+  const mergedEvents = mergeEvents(existingEvents, scrapedEvents, { now: new Date() });
   const summary = diffEvents(existingEvents, mergedEvents);
   const nextSource = replaceEventsArrayInSource(source, mergedEvents);
   const sourceChanged = nextSource !== source;
