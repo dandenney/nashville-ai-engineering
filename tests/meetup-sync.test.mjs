@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
+  applyRegistrationUrlOverrides,
   extractNextDataFromHtml,
   findMeetupEventUrls,
   findMeetupEventById,
@@ -242,6 +243,41 @@ test('mergeEvents matches existing entries by registration URL even if trailing 
   assert.equal(syncedEvents.length, 1);
   assert.equal(syncedEvents[0].id, '312408899');
   assert.equal(syncedEvents[0].currentRSVPs, 35);
+});
+
+test('applyRegistrationUrlOverrides replaces only targeted event URLs', () => {
+  const events = [
+    {
+      id: '312408881',
+      title: 'September Meetup',
+      description: 'Desc',
+      date: '2026-09-24T18:00:00-05:00',
+      location: 'Vaco',
+      currentRSVPs: 16,
+      registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408881/',
+      bgPath: 'bg-vicuna-13b.webp',
+    },
+    {
+      id: '312408907',
+      title: 'October Meetup',
+      description: 'Desc',
+      date: '2026-10-21T18:00:00-05:00',
+      location: 'AI Freedom Lab',
+      currentRSVPs: 7,
+      registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408907/',
+      bgPath: 'bg-vicuna-13b.webp',
+    },
+  ];
+
+  const updated = applyRegistrationUrlOverrides(events, {
+    '312408881': 'https://meetu.ps/e/PJQQ5/18pRD/i',
+  });
+
+  assert.equal(updated[0].registrationUrl, 'https://meetu.ps/e/PJQQ5/18pRD/i');
+  assert.equal(
+    updated[1].registrationUrl,
+    'https://www.meetup.com/artificialintelligencers/events/312408907/',
+  );
 });
 
 test('replaceEventsArrayInSource swaps only the events array declaration', () => {

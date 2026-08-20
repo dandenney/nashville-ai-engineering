@@ -5,6 +5,7 @@ import path from 'node:path';
 import process from 'node:process';
 
 import {
+  applyRegistrationUrlOverrides,
   diffEvents,
   extractNextDataFromHtml,
   findMeetupEventById,
@@ -18,6 +19,28 @@ import {
 const DEFAULT_GROUP_URL = 'https://www.meetup.com/artificialintelligencers/';
 const DEFAULT_GROUP_URLNAME = 'artificialintelligencers';
 const EVENTS_FILE = path.resolve('src/data/events.ts');
+
+function parseJsonObjectEnv(name) {
+  const raw = process.env[name];
+  if (!raw) {
+    return {};
+  }
+
+  let parsed;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (error) {
+    throw new Error(
+      `${name} must be valid JSON: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+    throw new Error(`${name} must be a JSON object keyed by Meetup event ID`);
+  }
+
+  return parsed;
+}
 
 function parseArgs(argv) {
   return {
@@ -85,12 +108,19 @@ function printSummary(summary, quiet) {
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
+  const registrationUrlOverrides = parseJsonObjectEnv(
+    'MEETUP_SYNC_REGISTRATION_URL_OVERRIDES',
+  );
   const source = await readFile(EVENTS_FILE, 'utf8');
   const existingEvents = parseEventsArrayFromSource(source);
   const scrapedEvents = await scrapeMeetupEvents(args);
   const mergedEvents = mergeEvents(existingEvents, scrapedEvents, { now: new Date() });
-  const summary = diffEvents(existingEvents, mergedEvents);
-  const nextSource = replaceEventsArrayInSource(source, mergedEvents);
+  const finalEvents = applyRegistrationUrlOverrides(
+    mergedEvents,
+    registrationUrlOverrides,
+  );
+  const summary = diffEvents(existingEvents, finalEvents);
+  const nextSource = replaceEventsArrayInSource(source, finalEvents);
   const sourceChanged = nextSource !== source;
 
   printSummary(summary, args.quiet);

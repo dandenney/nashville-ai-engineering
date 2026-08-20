@@ -313,6 +313,29 @@ export function mergeEvents(existingEvents, incomingEvents, options = {}) {
   return sortByDateDesc([...mergedById.values()]);
 }
 
+export function applyRegistrationUrlOverrides(events, overrides = {}) {
+  if (!overrides || typeof overrides !== 'object' || Array.isArray(overrides)) {
+    return [...events];
+  }
+
+  return events.map((event) => {
+    const override = overrides[String(event.id)];
+    if (typeof override !== 'string') {
+      return event;
+    }
+
+    const trimmedOverride = override.trim();
+    if (!trimmedOverride) {
+      return event;
+    }
+
+    return {
+      ...event,
+      registrationUrl: trimmedOverride,
+    };
+  });
+}
+
 export function parseEventsArrayFromSource(source) {
   const match = source.match(EVENTS_ARRAY_RE);
   if (!match) {
