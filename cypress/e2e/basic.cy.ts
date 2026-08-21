@@ -11,9 +11,12 @@ describe('Artificial Intelligencers site', () => {
   it('leads with the next meetup', () => {
     cy.get('#next').should('exist')
     cy.contains('Next meetup').should('exist')
-    // Either a live RSVP or the between-meetups state
+    // Accept either a full meetup.com URL or Meetup's short meetu.ps URL.
     cy.get('#next').within(() => {
-      cy.get('a[href*="meetup.com"]').should('have.length.at.least', 1)
+      cy.get('a[href*="meetup.com"], a[href*="meetu.ps"]').should(
+        'have.length.at.least',
+        1,
+      )
     })
   })
 
