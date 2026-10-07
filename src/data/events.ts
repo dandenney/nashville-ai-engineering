@@ -38,7 +38,7 @@ export const events: Event[] = [
     descriptionBodyHtml: '<p>Thank you, Vaco, for generously hosting our collective on the odd months of the year! Join us for an informative evening where local professional, amateur, and student community members (including you!) share “wires-out” demos, technical deep-dives, and discussions of AI-related projects or research they are working on, tools and techniques they have tried, or research papers/publications/presentations that they find insightful. This event is for those just starting to explore the technical aspects of AI, experienced AI professionals, and everyone in between. See you there!</p>\n<p>We&#39;re are maintaining a list of folks who express an interest in sharing what they are working on. So, <em>please</em> <em>let Dan and Ram know if you&#39;d like to share something with the community via a message here on Meetup or in our Discord channel (<a href="https://discord.gg/H38zBzzC" target="_blank" rel="noopener noreferrer">https://discord.gg/H38zBzzC</a>). And, if you know of hosts or sponsors for our community gatherings.</em></p>\n<p><strong>AGENDA</strong><br />0600 pm -- Setup/Meet &amp; Greet &quot;free time&quot;<br />0615 pm -- Demos/presentations (15- 20 min each)<br />0745 pm -- Wrap-up<br />0800 pm -- Vacate Room</p>',
     date: '2026-11-26T18:00:00-06:00',
     location: 'Vaco, 5501 Virginia Way, Suite 120, Brentwood, TN',
-    currentRSVPs: 6,
+    currentRSVPs: 7,
     registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408884/',
     bgPath: 'bg-vicuna-13b.webp'
   },
@@ -50,7 +50,7 @@ export const events: Event[] = [
     descriptionBodyHtml: '<p>Thank you, AI Freedom Lab, for generously hosting our AI collective on the even months of the year! Join us for an insight-packed evening where local professional, amateur, and student community members (including you!) share “wires-out” demos, technical deep-dives, and discussions of AI-related projects or research they are working on, tools and techniques they have tried, or research papers/publications/presentations that they find insightful. This event is for those just starting to explore the technical aspects of AI, experienced AI professionals, and everyone in between. See you here!</p>\n<p>We&#39;re are maintaining a list of folks who express an interest in sharing what they are working on. So, <em>please</em> <em>let Dan and Ram know if you&#39;d like to share something with the community via a message here on Meetup or in our Discord channel (<a href="https://discord.gg/xZqgkeWHnj" target="_blank" rel="noopener noreferrer">https://discord.gg/xZqgkeWHnj</a>). And, if you know of hosts or sponsors for our community gatherings.</em></p>\n<p><strong>AGENDA</strong><br />0600 pm -- Setup/Meet &amp; Greet &quot;free time&quot;<br />0615 pm -- Demos/presentations (15- 20 min each)<br />0745 pm -- Wrap-up<br />0800 pm -- Vacate Room</p>',
     date: '2026-10-21T18:00:00-05:00',
     location: 'AI Freedom Lab, 1912 21st Ave S, Nashville, TN',
-    currentRSVPs: 21,
+    currentRSVPs: 29,
     registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408907/',
     bgPath: 'bg-vicuna-13b.webp'
   },
