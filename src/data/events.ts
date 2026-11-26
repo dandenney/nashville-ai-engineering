@@ -26,7 +26,7 @@ export const events: Event[] = [
     descriptionBodyHtml: '<p>The Data and AI Holiday party falls on our date so we&#39;ll join the fun! Let&#39;s end the year with food, drink, and chatting about what we&#39;ve learned.</p>\n<p>Please register with their link: <a href="https://luma.com/141dmuf4" target="_blank" rel="noopener noreferrer">https://luma.com/141dmuf4</a></p>',
     date: '2026-12-16T18:00:00-06:00',
     location: 'AI Freedom Lab, 1912 21st Ave S, Nashville, TN',
-    currentRSVPs: 26,
+    currentRSVPs: 27,
     registrationUrl: 'https://www.meetup.com/artificialintelligencers/events/312408910/',
     bgPath: 'bg-vicuna-13b.webp'
   },
